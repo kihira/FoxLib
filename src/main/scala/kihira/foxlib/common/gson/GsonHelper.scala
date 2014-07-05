@@ -12,10 +12,10 @@
  * GNU General Public License for more details.
  */
 
-package kihira.foxcore.common.gson
+package kihira.foxlib.common.gson
 
 import com.google.gson.{Gson, GsonBuilder}
-import kihira.foxcore.common.gson.SubClassDeserializer
+import kihira.foxlib.common.gson.SubClassDeserializer
 
 object GsonHelper {
 

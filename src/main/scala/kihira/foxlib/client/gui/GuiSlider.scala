@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  */
 
-package kihira.foxcore.client.gui
+package kihira.foxlib.client.gui
 
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiButton

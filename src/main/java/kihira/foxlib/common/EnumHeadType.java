@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  */
 
-package kihira.foxcore.common;
+package kihira.foxlib.common;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

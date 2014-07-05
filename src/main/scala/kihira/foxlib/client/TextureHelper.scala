@@ -12,14 +12,14 @@
  * GNU General Public License for more details.
  */
 
-package kihira.foxcore.client
+package kihira.foxlib.client
 
 import java.awt.image.{WritableRaster, ColorModel, BufferedImage}
 import java.io.{IOException, InputStream}
 import javax.imageio.ImageIO
 
 import cpw.mods.fml.relauncher.ReflectionHelper
-import kihira.foxcore.FoxCore
+import kihira.foxlib.FoxLib
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.{EntityPlayerSP, AbstractClientPlayer}
 import net.minecraft.client.renderer.ThreadDownloadImageData
@@ -43,7 +43,7 @@ object TextureHelper {
             }
             catch {
                 case e: IOException => 
-                    FoxCore.logger.warn("Failed to read players skin texture", e)
+                    FoxLib.logger.warn("Failed to read players skin texture", e)
             }
             finally {
                 IOUtils.closeQuietly(inputStream)

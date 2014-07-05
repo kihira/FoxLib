@@ -12,9 +12,9 @@
  * GNU General Public License for more details.
  */
 
-package kihira.foxcore.client.gui
+package kihira.foxlib.client.gui
 
-import kihira.foxcore.client.RenderHelper
+import kihira.foxlib.client.RenderHelper
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiListExtended
 import net.minecraft.client.gui.GuiListExtended.IGuiListEntry

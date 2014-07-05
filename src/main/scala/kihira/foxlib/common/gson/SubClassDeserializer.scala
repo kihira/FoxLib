@@ -12,12 +12,12 @@
  * GNU General Public License for more details.
  */
 
-package kihira.foxcore.common.gson
+package kihira.foxlib.common.gson
 
 import java.lang.reflect.Type
 
 import com.google.gson._
-import kihira.foxcore.FoxCore
+import kihira.foxlib.FoxLib
 
 /**
  * A sub-class deserializer for use in Googles Gson. This is generic code that can work with most sub-classes so long as
@@ -34,9 +34,9 @@ class SubClassDeserializer[T] extends JsonDeserializer[T] {
         }
         catch {
             case e: ClassNotFoundException =>
-                FoxCore.logger.error("Failed to deserialize " + jsonObject.toString, new JsonParseException(e.getMessage))
+                FoxLib.logger.error("Failed to deserialize " + jsonObject.toString, new JsonParseException(e.getMessage))
             case e: ClassCastException =>
-                FoxCore.logger.error("Failed to deserialize, trying to deserialise into the wrong class " + jsonObject.toString, e)
+                FoxLib.logger.error("Failed to deserialize, trying to deserialise into the wrong class " + jsonObject.toString, e)
         }
         null.asInstanceOf[T]
     }

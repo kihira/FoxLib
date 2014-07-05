@@ -12,14 +12,14 @@
  * GNU General Public License for more details.
  */
 
-package kihira.foxcore
+package kihira.foxlib
 
 import cpw.mods.fml.common.Mod
 import org.apache.logging.log4j.{LogManager, Logger}
 
-@Mod(modid = FoxCore.MOD_ID, name = "FoxCore", version = "0.1.0", modLanguage = "scala")
-object FoxCore {
+@Mod(modid = FoxLib.MOD_ID, name = "FoxLib", version = "0.1.0", useMetadata = true, modLanguage = "scala")
+object FoxLib {
 
-    final val MOD_ID = "foxcore"
+    final val MOD_ID = "foxlib"
     final val logger: Logger = LogManager.getLogger(MOD_ID)
 }

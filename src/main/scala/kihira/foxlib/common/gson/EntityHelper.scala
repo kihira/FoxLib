@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  */
 
-package kihira.foxcore.common.gson
+package kihira.foxlib.common.gson
 
 import net.minecraft.entity.Entity
 import net.minecraft.util.MathHelper

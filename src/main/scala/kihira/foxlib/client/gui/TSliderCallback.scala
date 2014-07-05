@@ -12,12 +12,12 @@
  * GNU General Public License for more details.
  */
 
-package kihira.foxcore.client.gui
+package kihira.foxlib.client.gui
 
 trait TSliderCallback {
 
     /**
-     * This called when a [[kihira.foxcore.client.gui.GuiSlider]] value has changed and this is the sliders parent.
+     * This called when a [[kihira.foxlib.client.gui.GuiSlider]] value has changed and this is the sliders parent.
      * @param id The button ID for the slider
      * @param prevValue The previous value
      * @param newValue The new value

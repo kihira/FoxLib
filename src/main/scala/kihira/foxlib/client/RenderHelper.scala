@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  */
 
-package kihira.foxcore.client
+package kihira.foxlib.client
 
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.{FontRenderer, ScaledResolution}

@@ -19,8 +19,8 @@ apply plugin: 'scala'
 apply plugin: 'forge'
 
 version = "0.1.0"
-group= "kihira.foxcore" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "FoxCore"
+group= "kihira.foxlib" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "FoxLib"
 
 minecraft {
     version = "1.7.10-10.13.0.1152"
@@ -38,6 +38,21 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude '**/*.info'
     }
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'src'
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+}
+
+artifacts {
+    archives sourceJar
+    archives deobfJar
 }
 
 jar.doFirst {
