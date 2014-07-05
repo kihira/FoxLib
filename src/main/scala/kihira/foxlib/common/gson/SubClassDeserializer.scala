@@ -26,7 +26,7 @@ import kihira.foxlib.FoxLib
 class SubClassDeserializer[T] extends JsonDeserializer[T] {
     override def deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): T = {
         val jsonObject: JsonObject = json.getAsJsonObject
-        val className: String = jsonObject.get("type").getAsString
+        val className: String = jsonObject.get("clazz").getAsString
         var clazz: Class[_] = null
         try {
             clazz = Class.forName(className)
