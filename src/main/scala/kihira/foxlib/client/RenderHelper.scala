@@ -123,10 +123,11 @@ object RenderHelper {
             tessellator.startDrawingQuads()
             tessellator.setColorRGBA_F(0F, 0F, 0F, 0.25F)
             if (center) {
-                tessellator.addVertex(-(width / 2) - 1, height / 2, 0.0D)
-                tessellator.addVertex(-(width / 2) - 1, -(height / 2) - 1, 0.0D)
-                tessellator.addVertex((width / 2) + 1, -(height / 2) - 1, 0.0D)
-                tessellator.addVertex((width / 2) + 1, height / 2, 0.0D)
+                //We add the offset of the font height to move it to the correct position
+                tessellator.addVertex(-(width / 2) - 1, fontrenderer.FONT_HEIGHT, 0.0D)
+                tessellator.addVertex(-(width / 2) - 1, -height + fontrenderer.FONT_HEIGHT - 1, 0.0D)
+                tessellator.addVertex((width / 2) + 1, -height + fontrenderer.FONT_HEIGHT - 1, 0.0D)
+                tessellator.addVertex((width / 2) + 1, fontrenderer.FONT_HEIGHT, 0.0D)
             }
             else {
                 tessellator.addVertex(-1, height / 2, 0.0D)
