@@ -115,6 +115,7 @@ object RenderHelper {
         GL11.glScalef(-scale, -scale, scale)
         GL11.glDisable(GL11.GL_LIGHTING)
         GL11.glEnable(GL11.GL_BLEND)
+        GL11.glDisable(GL11.GL_CULL_FACE)
         OpenGlHelper.glBlendFunc(770, 771, 1, 0)
         GL11.glDisable(GL11.GL_TEXTURE_2D)
 
@@ -145,6 +146,7 @@ object RenderHelper {
         }
 
         GL11.glEnable(GL11.GL_LIGHTING)
+        GL11.glEnable(GL11.GL_CULL_FACE)
         GL11.glDisable(GL11.GL_BLEND)
         GL11.glColor4f(1F, 1F, 1F, 1F)
         GL11.glPopMatrix()

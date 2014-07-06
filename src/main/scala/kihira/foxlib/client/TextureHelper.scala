@@ -14,16 +14,16 @@
 
 package kihira.foxlib.client
 
-import java.awt.image.{WritableRaster, ColorModel, BufferedImage}
+import java.awt.image.{BufferedImage, ColorModel, WritableRaster}
 import java.io.{IOException, InputStream}
 import javax.imageio.ImageIO
 
 import cpw.mods.fml.relauncher.ReflectionHelper
 import kihira.foxlib.FoxLib
 import net.minecraft.client.Minecraft
-import net.minecraft.client.entity.{EntityPlayerSP, AbstractClientPlayer}
+import net.minecraft.client.entity.{AbstractClientPlayer, EntityPlayerSP}
 import net.minecraft.client.renderer.ThreadDownloadImageData
-import net.minecraft.client.renderer.texture.{ITextureObject, SimpleTexture, TextureUtil}
+import net.minecraft.client.renderer.texture.{ITextureObject, TextureUtil}
 import net.minecraft.util.ResourceLocation
 import org.apache.commons.io.IOUtils
 
@@ -59,7 +59,7 @@ object TextureHelper {
     }
 
     def restoreOriginalTexture(resourceLoc:ResourceLocation) {
-        var textureObject:ITextureObject = Minecraft.getMinecraft.getTextureManager.getTexture(resourceLoc)
+/*        var textureObject:ITextureObject = Minecraft.getMinecraft.getTextureManager.getTexture(resourceLoc)
 
         if (textureObject == null) textureObject = new SimpleTexture(resourceLoc)
         else Minecraft.getMinecraft.getTextureManager.deleteTexture(resourceLoc)
@@ -70,7 +70,7 @@ object TextureHelper {
                 TextureUtil.uploadTextureImage(textureObject.getGlTextureId, bufferedImage)
             case _ =>
         }
-        Minecraft.getMinecraft.getTextureManager.loadTexture(resourceLoc, textureObject)
+        Minecraft.getMinecraft.getTextureManager.loadTexture(resourceLoc, textureObject)*/
     }
 
     def uploadTexture(resourceLoc:ResourceLocation, bufferedImage:BufferedImage) {
