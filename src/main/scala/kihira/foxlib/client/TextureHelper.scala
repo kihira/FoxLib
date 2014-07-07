@@ -21,7 +21,7 @@ import javax.imageio.ImageIO
 import cpw.mods.fml.relauncher.ReflectionHelper
 import kihira.foxlib.FoxLib
 import net.minecraft.client.Minecraft
-import net.minecraft.client.entity.{AbstractClientPlayer, EntityPlayerSP}
+import net.minecraft.client.entity.AbstractClientPlayer
 import net.minecraft.client.renderer.ThreadDownloadImageData
 import net.minecraft.client.renderer.texture.{ITextureObject, TextureUtil}
 import net.minecraft.util.ResourceLocation
@@ -29,7 +29,7 @@ import org.apache.commons.io.IOUtils
 
 object TextureHelper {
     
-    def getPlayerSkinAsBufferedImage(player:EntityPlayerSP): BufferedImage = {
+    def getPlayerSkinAsBufferedImage(player:AbstractClientPlayer): BufferedImage = {
         var bufferedImage: BufferedImage = null
         var inputStream: InputStream = null
         if (player.func_152123_o) {
