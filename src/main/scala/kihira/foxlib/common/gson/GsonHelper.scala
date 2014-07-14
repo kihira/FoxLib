@@ -15,7 +15,6 @@
 package kihira.foxlib.common.gson
 
 import com.google.gson.{Gson, GsonBuilder}
-import kihira.foxlib.common.gson.SubClassDeserializer
 
 object GsonHelper {
 
