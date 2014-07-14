@@ -23,7 +23,7 @@ group= "kihira.foxlib" // http://maven.apache.org/guides/mini/guide-naming-conve
 archivesBaseName = "FoxLib"
 
 minecraft {
-    version = "1.7.10-10.13.0.1170"
+    version = "1.7.10-10.13.0.1180"
 }
 processResources {
     // replace stuff in mcmod.info, nothing else
