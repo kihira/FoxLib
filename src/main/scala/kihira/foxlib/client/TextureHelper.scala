@@ -58,6 +58,22 @@ object TextureHelper {
         bufferedImage
     }
 
+    def getPlayerSkinAsBufferedImage2(playerName: String): BufferedImage = {
+        var skinResLoc: ResourceLocation = AbstractClientPlayer.getLocationSkin(playerName)
+        var bufferedImage: BufferedImage = null
+
+        if (skinResLoc == null) skinResLoc = AbstractClientPlayer.getLocationSkin("default")
+        val imageData: ThreadDownloadImageData = AbstractClientPlayer.getDownloadImageSkin(skinResLoc, playerName)
+        bufferedImage = ReflectionHelper.getPrivateValue(classOf[ThreadDownloadImageData], imageData, "bufferedImage") //TODO AT?
+
+        if (bufferedImage != null) {
+            //Clone the buffered image if we got one
+            val cm: ColorModel = bufferedImage.getColorModel
+            bufferedImage = new BufferedImage(cm, bufferedImage.copyData(null), cm.isAlphaPremultiplied, null)
+        }
+        bufferedImage
+    }
+
     def restoreOriginalTexture(resourceLoc:ResourceLocation) {
 /*        var textureObject:ITextureObject = Minecraft.getMinecraft.getTextureManager.getTexture(resourceLoc)
 
@@ -73,12 +89,12 @@ object TextureHelper {
         Minecraft.getMinecraft.getTextureManager.loadTexture(resourceLoc, textureObject)*/
     }
 
-    def uploadTexture(resourceLoc:ResourceLocation, bufferedImage:BufferedImage) {
+    def uploadTexture(resourceLoc: ResourceLocation, bufferedImage: BufferedImage) {
         val textureObject:ITextureObject = Minecraft.getMinecraft.getTextureManager.getTexture(resourceLoc)
         if (textureObject != null) uploadTexture(textureObject, bufferedImage)
     }
 
-    def uploadTexture(textureObject:ITextureObject, bufferedImage:BufferedImage) {
+    def uploadTexture(textureObject: ITextureObject, bufferedImage: BufferedImage) {
         TextureUtil.uploadTextureImage(textureObject.getGlTextureId, bufferedImage)
     }
 }
