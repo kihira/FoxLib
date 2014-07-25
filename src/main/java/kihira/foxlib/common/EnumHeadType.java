@@ -73,6 +73,7 @@ public enum EnumHeadType {
     private static GameProfile refreshGameProfile(GameProfile profile) {
         if (profile != null && !StringUtils.isNullOrEmpty(profile.getName())) {
             if (!profile.isComplete() || !profile.getProperties().containsKey("textures")) {
+                //This would always need to get textures as textures aren't saved client side
                 GameProfile gameprofile = MinecraftServer.getServer().func_152358_ax().func_152655_a(profile.getName());
                 if (gameprofile != null) {
                     Property property = (Property) Iterables.getFirst(gameprofile.getProperties().get("textures"), (Object) null);
