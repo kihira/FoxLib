@@ -1,3 +1,11 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2014 Zoe Lee (Kihira)
+ *
+ * See LICENSE for full License
+ */
+
 package kihira.foxlib.common
 
 class Loc4(val dimID: Int, val posX: Double, val posY: Double, val posZ: Double) {

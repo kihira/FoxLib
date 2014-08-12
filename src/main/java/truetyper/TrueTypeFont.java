@@ -1,3 +1,11 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2014 Zoe Lee (Kihira)
+ *
+ * See LICENSE for full License
+ */
+
 package truetyper;
 
 import net.minecraft.client.renderer.Tessellator;
@@ -16,15 +24,6 @@ import java.nio.IntBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
-
-/**
-*	TrueTyper: Open Source TTF implementation for Minecraft.
-*	Modified from Slick2D - under BSD Licensing -  http://slick.ninjacave.com/license/
-*
-*	Copyright (c) 2013 - Slick2D
-*
-*	All rights reserved.
-*/
 
 public class TrueTypeFont {
 	public final static int
