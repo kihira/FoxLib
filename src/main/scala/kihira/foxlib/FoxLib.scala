@@ -17,7 +17,7 @@ import kihira.foxlib.proxy.CommonProxy
 import net.minecraftforge.common.config.Configuration
 import org.apache.logging.log4j.{LogManager, Logger}
 
-@Mod(modid = FoxLib.MOD_ID, name = "FoxLib", version = "0.2.1", modLanguage = "scala")
+@Mod(modid = FoxLib.MOD_ID, name = "FoxLib", version = "0.3.0", modLanguage = "scala")
 object FoxLib {
 
     final val MOD_ID = "foxlib"
