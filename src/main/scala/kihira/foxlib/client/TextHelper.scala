@@ -9,27 +9,12 @@
 package kihira.foxlib.client
 
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.{FontRenderer, ScaledResolution}
+import net.minecraft.client.gui.FontRenderer
 import net.minecraft.client.renderer.entity.RenderManager
 import net.minecraft.client.renderer.{OpenGlHelper, Tessellator}
 import org.lwjgl.opengl.GL11
 
-object RenderHelper {
-
-    //Following methods are copied from iChunUtil with permissions
-    def startGlScissor(x: Int, y: Int, width: Int, height: Int) {
-        val mc: Minecraft = Minecraft.getMinecraft
-        val reso: ScaledResolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight)
-        val scaleW: Double = mc.displayWidth.asInstanceOf[Double] / reso.getScaledWidth_double
-        val scaleH: Double = mc.displayHeight.asInstanceOf[Double] / reso.getScaledHeight_double
-        GL11.glEnable(GL11.GL_SCISSOR_TEST)
-        GL11.glScissor(Math.floor(x.asInstanceOf[Double] * scaleW).asInstanceOf[Int], Math.floor(mc.displayHeight.asInstanceOf[Double] - ((y + height).asInstanceOf[Double] * scaleH)).asInstanceOf[Int], Math.floor((x + width).asInstanceOf[Double] * scaleW).asInstanceOf[Int] - Math.floor(x.asInstanceOf[Double] * scaleW).asInstanceOf[Int], Math.floor(mc.displayHeight.asInstanceOf[Double] - (y.asInstanceOf[Double] * scaleH)).asInstanceOf[Int] - Math.floor(mc.displayHeight.asInstanceOf[Double] - ((y + height).asInstanceOf[Double] * scaleH)).asInstanceOf[Int])
-    }
-
-    def endGlScissor() {
-        GL11.glDisable(GL11.GL_SCISSOR_TEST)
-    }
-
+object TextHelper {
     /**
      * Renders a message wrapped to a certain length, expanding downwards
      * @param x:[[Double]] The x position
