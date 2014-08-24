@@ -10,8 +10,11 @@ package kihira.foxlib.client
 
 import java.awt.image.{BufferedImage, ColorModel, WritableRaster}
 import java.io.{IOException, InputStream}
+import java.util
 import javax.imageio.ImageIO
 
+import com.mojang.authlib.minecraft.MinecraftProfileTexture
+import cpw.mods.fml.common.ObfuscationReflectionHelper
 import cpw.mods.fml.relauncher.ReflectionHelper
 import kihira.foxlib.FoxLib
 import net.minecraft.client.Minecraft
@@ -26,22 +29,32 @@ object TextureHelper {
     def getPlayerSkinAsBufferedImage(player:AbstractClientPlayer): BufferedImage = {
         var bufferedImage: BufferedImage = null
         var inputStream: InputStream = null
-        if (player.func_152123_o) {
-            val imageData: ThreadDownloadImageData = AbstractClientPlayer.getDownloadImageSkin(player.getLocationSkin, player.getCommandSenderName)
-            bufferedImage = ReflectionHelper.getPrivateValue(classOf[ThreadDownloadImageData], imageData, "bufferedImage")
-        }
-        else {
-            try {
+        val mc: Minecraft = Minecraft.getMinecraft
+        val map: util.Map[_, _] = mc.func_152342_ad.func_152788_a(player.getGameProfile)
+
+        try {
+            if (map.containsKey(MinecraftProfileTexture.Type.SKIN)) {
+                val skinloc: ResourceLocation = mc.func_152342_ad.func_152792_a(map.get(MinecraftProfileTexture.Type.SKIN).asInstanceOf[MinecraftProfileTexture], MinecraftProfileTexture.Type.SKIN)
+                val skintex: ITextureObject = mc.getTextureManager.getTexture(skinloc)
+                skintex match {
+                    case imagedata: ThreadDownloadImageData =>
+                        bufferedImage = ObfuscationReflectionHelper.getPrivateValue(classOf[ThreadDownloadImageData], imagedata, "bufferedImage", "field_110560_d", "bpj.g")
+                    case _ =>
+                        inputStream = Minecraft.getMinecraft.getResourceManager.getResource(AbstractClientPlayer.locationStevePng).getInputStream
+                        bufferedImage = ImageIO.read(inputStream)
+                }
+            }
+            else {
                 inputStream = Minecraft.getMinecraft.getResourceManager.getResource(AbstractClientPlayer.locationStevePng).getInputStream
                 bufferedImage = ImageIO.read(inputStream)
             }
-            catch {
-                case e: IOException => 
-                    FoxLib.logger.warn("Failed to read players skin texture", e)
+        }
+        catch {
+            case e: IOException =>
+                FoxLib.logger.warn("Failed to read players skin texture", e)
             }
-            finally {
-                IOUtils.closeQuietly(inputStream)
-            }
+        finally {
+            IOUtils.closeQuietly(inputStream)
         }
         if (bufferedImage != null) {
             val cm:ColorModel = bufferedImage.getColorModel
