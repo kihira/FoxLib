@@ -8,7 +8,7 @@
 
 package kihira.foxlib.client
 
-import java.awt.image.{BufferedImage, ColorModel, WritableRaster}
+import java.awt.image.{BufferedImage, ColorModel}
 import java.io.{IOException, InputStream}
 import java.util
 import javax.imageio.ImageIO
@@ -55,12 +55,6 @@ object TextureHelper {
             }
         finally {
             IOUtils.closeQuietly(inputStream)
-        }
-        if (bufferedImage != null) {
-            val cm:ColorModel = bufferedImage.getColorModel
-            val isAlphaPremultiplied = cm.isAlphaPremultiplied
-            val raster:WritableRaster = bufferedImage.copyData(null)
-            return new BufferedImage(cm, raster, isAlphaPremultiplied, null)
         }
         bufferedImage
     }
