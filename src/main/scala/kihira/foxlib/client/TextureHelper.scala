@@ -38,7 +38,7 @@ object TextureHelper {
                 val skintex: ITextureObject = mc.getTextureManager.getTexture(skinloc)
                 skintex match {
                     case imagedata: ThreadDownloadImageData =>
-                        bufferedImage = ObfuscationReflectionHelper.getPrivateValue(classOf[ThreadDownloadImageData], imagedata, "bufferedImage", "field_110560_d", "bpj.g")
+                        bufferedImage = ObfuscationReflectionHelper.getPrivateValue(classOf[ThreadDownloadImageData], imagedata, "bufferedImage", "field_110560_d", "bpr.h")
                     case _ =>
                         inputStream = Minecraft.getMinecraft.getResourceManager.getResource(AbstractClientPlayer.locationStevePng).getInputStream
                         bufferedImage = ImageIO.read(inputStream)
