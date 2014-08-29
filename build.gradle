@@ -81,10 +81,12 @@ artifacts {
 }
 
 uploadArchives {
-    repositories.mavenDeployer {
-        configuration = configurations.deployerJars
-        repository(url: project.maven_url) {
-            authentication(userName: project.maven_username, password: project.maven_password)
+    if (project.hasProperty("maven_url")) {
+        repositories.mavenDeployer {
+            configuration = configurations.deployerJars
+            repository(url: project.maven_url) {
+                authentication(userName: project.maven_username, password: project.maven_password)
+            }
         }
     }
 }
