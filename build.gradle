@@ -15,8 +15,25 @@ buildscript {
     }
 }
 
+repositories {
+    mavenCentral()
+    maven {
+        name = 'Kihira Repo'
+        url = 'http://maven.kihirakreations.co.uk'
+    }
+}
+
+configurations {
+    deployerJars
+}
+
+dependencies {
+    deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
+}
+
 apply plugin: 'scala'
 apply plugin: 'forge'
+apply plugin: 'maven'
 
 project.ext {
     massive = "0"
@@ -64,57 +81,14 @@ artifacts {
 }
 
 uploadArchives {
-    dependsOn 'reobf'
-    repositories {
-        mavenDeployer {
-            if (project.hasProperty("maven_url")) {
-                logger.info('Publishing to files server')
-                repository(url: project.maven_url) {
-                    authentication(userName: project.maven_username, password: project.maven_password)
-                }
-            }
-
-            pom {
-                groupId = project.group
-                version = project.version
-                artifactId = project.archivesBaseName
-            }
-
-            pom.project {
-                name project.archivesBaseName
-                packaging 'jar'
-                description 'FoxLib'
-                url 'https://github.com/kihira/FoxLib'
-
-                scm {
-                    url 'https://github.com/kihira/FoxLib'
-                    connection 'scm:git:git://github.com/kihira/FoxLib.git'
-                    developerConnection 'scm:git:git@github.com/kihira/FoxLib.git'
-                }
-
-                issueManagement {
-                    system 'github'
-                    url 'https://github.com/kihira/FoxLib/issues'
-                }
-
-                licenses {
-                    license {
-                        name 'MIT License'
-                        url 'https://github.com/kihira/FoxLib/blob/master/LICENSE'
-                        distribution 'repo'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'Kihira'
-                        name 'Kihira'
-                        roles {
-                            role 'developer'
-                        }
-                    }
-                }
-            }
+    repositories.mavenDeployer {
+        configuration = configurations.deployerJars
+        repository(url: project.maven_url) {
+            authentication(userName: project.maven_username, password: project.maven_password)
         }
     }
+}
+
+task('uploadJars', dependsOn: uploadArchives) {
+    description = "Uploads JARs"
 }
