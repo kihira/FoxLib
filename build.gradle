@@ -134,7 +134,4 @@ uploadArchives {
             }
         }
     }
-    else {
-        add project.repositories.mavenLocal()
-    }
 }
