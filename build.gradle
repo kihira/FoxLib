@@ -23,6 +23,9 @@ repositories {
     }
 }
 
+apply plugin: 'scala'
+apply plugin: 'forge'
+
 configurations {
     deployerJars
 }
@@ -30,10 +33,6 @@ configurations {
 dependencies {
     deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
 }
-
-apply plugin: 'scala'
-apply plugin: 'forge'
-apply plugin: 'maven'
 
 project.ext {
     massive = "0"
@@ -44,7 +43,7 @@ project.ext {
 }
 
 version = "${project.ext.mcVersion}-${project.ext.massive}.${project.ext.major}.${project.minor}.${System.getenv("BUILD_NUMBER") ?: 0}"
-group= "kihira.foxlib"
+group= "kihira"
 archivesBaseName = "FoxLib"
 
 minecraft {
@@ -69,28 +68,68 @@ processResources {
     }
 }
 
-task userDevJar(type: Jar) {
-    from(sourceSets.main.output)
-    from(sourceSets.main.allSource)
-    classifier = "userdev"
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    from sourceSets.api.allSource
+    classifier = 'src'
 }
 
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    from sourceSets.api.output
+    classifier = 'dev'
+}
 
 artifacts {
-    archives userDevJar
+    archives sourceJar
+    archives deobfJar
 }
 
 uploadArchives {
-    if (project.hasProperty("maven_url")) {
-        repositories.mavenDeployer {
-            configuration = configurations.deployerJars
-            repository(url: project.maven_url) {
-                authentication(userName: project.maven_username, password: project.maven_password)
+    dependsOn 'reobf'
+
+    repositories.mavenDeployer {
+        configuration = configurations.deployerJars
+        repository(url: teamcity["maven_url"]) {
+            authentication(userName: teamcity["maven_username"], password: teamcity["maven_password"])
+        }
+        pom {
+            groupId = project.group
+            version = project.version
+            artifactId = project.archivesBaseName
+            project {
+                name project.archivesBaseName
+                packaging 'jar'
+                description 'FoxLib'
+                url 'http://kihirakreations.co.uk'
+
+                scm {
+                    url 'https://github.com/kihira/FoxLib'
+                    connection 'scm:git:git://github.com/kihira/FoxLib.git'
+                    developerConnection 'scm:git:git@github.com:kihira/FoxLib.git'
+                }
+
+                issueManagement {
+                    system 'github'
+                    url 'https://github.com/kihira/FoxLib/issues'
+                }
+
+                licenses {
+                    license {
+                        name 'MIT'
+                        url 'https://github.com/kihira/FoxLib/blob/master/LICENSE'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'Kihira'
+                        name 'Kihira'
+                        roles { role 'developer' }
+                    }
+                }
             }
         }
     }
-}
-
-task('uploadJars', dependsOn: uploadArchives) {
-    description = "Uploads JARs"
 }
