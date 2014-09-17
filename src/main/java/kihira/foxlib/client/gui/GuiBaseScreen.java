@@ -20,16 +20,19 @@ import java.util.List;
 public abstract class GuiBaseScreen extends GuiScreen {
 
     @Override
-    public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_) {
-        super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
+    public void drawScreen(int mouseX, int mouseY, float p_73863_3_) {
+        super.drawScreen(mouseX, mouseY, p_73863_3_);
 
         //Tooltips
         for (Object obj : this.buttonList) {
-            if (obj instanceof GuiButtonTooltip && ((GuiButtonTooltip) obj).func_146115_a()) ((GuiButtonTooltip) obj).func_146111_b(p_73863_1_, p_73863_2_);
+            //Has tooltip and has mouse over
+            if (obj instanceof ITooltip && ((GuiButton) obj).func_146115_a()) {
+                func_146283_a(((ITooltip) obj).getTooltip(mouseX, mouseY), mouseX, mouseY);
+            }
         }
     }
 
-    public class GuiButtonTooltip extends GuiButton {
+    public class GuiButtonTooltip extends GuiButton implements ITooltip {
         private final int maxTextWidth;
         protected final String[] tooltips;
 
@@ -41,14 +44,14 @@ public abstract class GuiBaseScreen extends GuiScreen {
 
         @Override
         @SuppressWarnings("unchecked")
-        public void func_146111_b(int x, int y) {
+        public List<String> getTooltip(int mouseX, int mouseY) {
+            List<String> list = new ArrayList<String>();
             if (this.tooltips != null && this.tooltips.length > 0) {
-                List<String> list = new ArrayList<String>();
                 for (String s : this.tooltips) {
                     list.addAll(fontRendererObj.listFormattedStringToWidth(s, this.maxTextWidth));
                 }
-                func_146283_a(list, x, y);
             }
+            return list;
         }
     }
 
