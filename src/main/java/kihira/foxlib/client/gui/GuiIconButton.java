@@ -41,7 +41,7 @@ public class GuiIconButton extends GuiButton implements ITooltip {
             field_146123_n = mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height;
             int textureOffset = getHoverState(field_146123_n);
 
-            drawTexturedModalRect(xPosition, yPosition, icon.u, icon.v + (textureOffset * 15), 16, 16);
+            drawTexturedModalRect(xPosition, yPosition, icon.u, icon.v + (textureOffset * 16), 16, 16);
         }
     }
 
@@ -51,7 +51,8 @@ public class GuiIconButton extends GuiButton implements ITooltip {
     }
 
     public enum Icons {
-        UNDO(0, 0);
+        UNDO(0, 0),
+        QUESTION(16, 0);
 
         public final int u;
         public final int v;
