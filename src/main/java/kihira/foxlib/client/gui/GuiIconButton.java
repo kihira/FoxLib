@@ -8,7 +8,6 @@
 
 package kihira.foxlib.client.gui;
 
-import kihira.foxlib.FoxLib;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -19,7 +18,7 @@ import java.util.List;
 
 public class GuiIconButton extends GuiButton implements ITooltip {
 
-    public static final ResourceLocation iconsTextures = new ResourceLocation(FoxLib.MOD_ID().toLowerCase(), "textures/gui/icons.png");
+    public static final ResourceLocation iconsTextures = new ResourceLocation("foxlib", "textures/gui/icons.png");
 
     private final Icons icon;
     private final List<String> tooltip;
