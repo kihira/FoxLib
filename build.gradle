@@ -40,9 +40,14 @@ project.ext {
     minor = "0"
     mcVersion = "1.7.10"
     forgeVersion = "10.13.0.1180"
+    buildVersion = System.getenv("BUILD_NUMBER")
 }
 
-version = "${project.ext.mcVersion}-${project.ext.massive}.${project.ext.major}.${project.minor}.${System.getenv("BUILD_NUMBER") ?: 0}"
+project.version = "${project.ext.mcVersion}-${project.ext.massive}.${project.ext.major}.${project.minor}"
+if (project.hasProperty("teamcity") && teamcity["maven_release"] != null && project.ext.buildVersion != null) {
+    version = version + ".${System.getenv("BUILD_NUMBER")}"
+}
+
 group= "kihira"
 archivesBaseName = "FoxLib"
 
@@ -50,7 +55,7 @@ minecraft {
     version = "${project.ext.mcVersion}-${project.ext.forgeVersion}"
 
     replaceIn "FoxLib.scala"
-    replace "@VERSION@", "${version}.${System.getenv("BUILD_NUMBER") ?: 0}"
+    replace "@VERSION@", project.version
 }
 
 processResources {
@@ -88,45 +93,47 @@ artifacts {
 uploadArchives {
     dependsOn 'reobf'
 
-    repositories.mavenDeployer {
-        configuration = configurations.deployerJars
-        repository(url: teamcity["maven_url"]) {
-            authentication(userName: teamcity["maven_username"], password: teamcity["maven_password"])
-        }
-        pom {
-            groupId = project.group
-            version = project.version
-            artifactId = project.archivesBaseName
-            project {
-                name project.archivesBaseName
-                packaging 'jar'
-                description 'FoxLib'
-                url 'http://kihirakreations.co.uk'
+    if (project.hasProperty("teamcity")) {
+        repositories.mavenDeployer {
+            configuration = configurations.deployerJars
+            repository(url: teamcity["maven_url"]) {
+                authentication(userName: teamcity["maven_username"], password: teamcity["maven_password"])
+            }
+            pom {
+                groupId = project.group
+                version = project.version
+                artifactId = project.archivesBaseName
+                project {
+                    name project.archivesBaseName
+                    packaging 'jar'
+                    description 'FoxLib'
+                    url 'http://kihirakreations.co.uk'
 
-                scm {
-                    url 'https://github.com/kihira/FoxLib'
-                    connection 'scm:git:git://github.com/kihira/FoxLib.git'
-                    developerConnection 'scm:git:git@github.com:kihira/FoxLib.git'
-                }
-
-                issueManagement {
-                    system 'github'
-                    url 'https://github.com/kihira/FoxLib/issues'
-                }
-
-                licenses {
-                    license {
-                        name 'MIT'
-                        url 'https://github.com/kihira/FoxLib/blob/master/LICENSE'
-                        distribution 'repo'
+                    scm {
+                        url 'https://github.com/kihira/FoxLib'
+                        connection 'scm:git:git://github.com/kihira/FoxLib.git'
+                        developerConnection 'scm:git:git@github.com:kihira/FoxLib.git'
                     }
-                }
 
-                developers {
-                    developer {
-                        id 'Kihira'
-                        name 'Kihira'
-                        roles { role 'developer' }
+                    issueManagement {
+                        system 'github'
+                        url 'https://github.com/kihira/FoxLib/issues'
+                    }
+
+                    licenses {
+                        license {
+                            name 'MIT'
+                            url 'https://github.com/kihira/FoxLib/blob/master/LICENSE'
+                            distribution 'repo'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id 'Kihira'
+                            name 'Kihira'
+                            roles { role 'developer' }
+                        }
                     }
                 }
             }
