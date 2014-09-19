@@ -28,9 +28,9 @@ public class GuiList extends GuiListExtended {
     }
 
     @Override
-    public void drawScreen(int p_148128_1_, int p_148128_2_, float p_148128_3_) {
+    public void drawScreen(int mouseX, int mouseY, float p_148128_3_) {
         RenderHelper.startGlScissor(this.left, this.top, this.width, this.height);
-        super.drawScreen(p_148128_1_, p_148128_2_, p_148128_3_);
+        super.drawScreen(mouseX, mouseY, p_148128_3_);
         RenderHelper.endGlScissor();
     }
 
