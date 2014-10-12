@@ -52,7 +52,8 @@ public class GuiIconButton extends GuiButton implements ITooltip {
 
     public enum Icons {
         UNDO(0, 0),
-        QUESTION(16, 0);
+        QUESTION(16, 0),
+        EYEDROPPER(32, 0);
 
         public final int u;
         public final int v;
