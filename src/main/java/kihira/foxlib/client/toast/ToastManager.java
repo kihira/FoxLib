@@ -12,6 +12,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.profiler.Profiler;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -19,6 +20,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class ToastManager {
 
@@ -32,12 +34,22 @@ public class ToastManager {
     }
 
     public void createToast(int x, int y, String text) {
-        toasts.add(new Toast(x, y, text, Minecraft.getMinecraft().fontRenderer.getStringWidth(text) * 4));
+        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
+        int stringWidth = fontRenderer.getStringWidth(text);
+        toasts.add(new Toast(x, y, stringWidth + 10,  stringWidth * 3, text));
     }
 
-    public void createCenteredToast(int x, int y, String text) {
-        int stringWidth = Minecraft.getMinecraft().fontRenderer.getStringWidth(text);
-        toasts.add(new Toast(x - (stringWidth / 2) - 5, y, text, stringWidth * 4));
+    @SuppressWarnings("unchecked")
+    public void createCenteredToast(int x, int y, int maxWidth, String text) {
+        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
+        int stringWidth = fontRenderer.getStringWidth(text);
+        if (stringWidth > maxWidth) {
+            List<String> strings = fontRenderer.listFormattedStringToWidth(text, maxWidth);
+            toasts.add(new Toast(x - (maxWidth / 2) - 5, y, maxWidth + 10, maxWidth * 2, strings.toArray(new String[strings.size()])));
+        }
+        else {
+            toasts.add(new Toast(x - (stringWidth / 2) - 5, y, stringWidth + 10, stringWidth * 2, text));
+        }
     }
 
     @SubscribeEvent

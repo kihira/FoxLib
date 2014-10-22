@@ -14,24 +14,26 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.OpenGlHelper;
 import org.lwjgl.opengl.GL11;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Toast {
 
     private final int xPos;
     private final int yPos;
     private final int width;
     private final int height;
-    private final String message;
+    private final List<String> message;
     private boolean mouseOver;
     public int time;
 
-    public Toast(int xPos, int yPos, String message, int time) {
+    public Toast(int xPos, int yPos, int width, int time, String... message) {
         this.xPos = xPos;
         this.yPos = yPos;
-        this.message = message;
+        this.width = width;
         this.time = time;
-
-        width = Minecraft.getMinecraft().fontRenderer.getStringWidth(message) + 10;
-        height = Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT + 7;
+        this.message = Arrays.asList(message);
+        height = this.message.size() * Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT + 7;
     }
 
     public void drawToast(int mouseX, int mouseY) {
@@ -48,9 +50,13 @@ public class Toast {
                 GL11.glDisable(GL11.GL_LIGHTING);
                 OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
                 drawBackdrop(xPos, yPos, width, height);
-                fontRenderer.drawStringWithShadow(message, xPos + 5, yPos + (height / 4), 0xFFFFFF | (opacity << 24));
-                GL11.glEnable(GL11.GL_LIGHTING);
+                int colour = 0xFFFFFF | (opacity << 24);
+                for (int i = 0; i < message.size(); i++) {
+                    String s = message.get(i);
+                    fontRenderer.drawStringWithShadow(s, xPos + 5, yPos + 4 + (fontRenderer.FONT_HEIGHT * i), colour);
+                }
                 GL11.glDisable(GL11.GL_BLEND);
+                GL11.glColor4f(0F, 0F, 0F, 1F);
                 GL11.glPopMatrix();
             }
         }
