@@ -15,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.profiler.Profiler;
 import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -49,6 +50,15 @@ public class ToastManager {
         }
         else {
             toasts.add(new Toast(x - (stringWidth / 2) - 5, y, stringWidth + 10, stringWidth * 4, text));
+        }
+    }
+
+    @SubscribeEvent
+    public void onMouseEvent(MouseEvent event) {
+        for (Toast toast : toasts) {
+            if (toast.mouseOver) {
+                toast.onMouseEvent(event);
+            }
         }
     }
 

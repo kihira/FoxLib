@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraftforge.client.event.MouseEvent;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Arrays;
@@ -24,7 +25,7 @@ public class Toast {
     private final int width;
     private final int height;
     private final List<String> message;
-    private boolean mouseOver;
+    public boolean mouseOver;
     public int time;
 
     public Toast(int xPos, int yPos, int width, int time, String... message) {
@@ -35,6 +36,8 @@ public class Toast {
         this.message = Arrays.asList(message);
         height = this.message.size() * Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT + 7;
     }
+
+    public void onMouseEvent(MouseEvent mouseEvent) {}
 
     public void drawToast(int mouseX, int mouseY) {
         if (this.time > 0) {
