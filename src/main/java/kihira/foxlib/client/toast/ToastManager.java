@@ -48,7 +48,7 @@ public class ToastManager {
             toasts.add(new Toast(x - (maxWidth / 2) - 5, y, maxWidth + 10, maxWidth * 2, strings.toArray(new String[strings.size()])));
         }
         else {
-            toasts.add(new Toast(x - (stringWidth / 2) - 5, y, stringWidth + 10, stringWidth * 2, text));
+            toasts.add(new Toast(x - (stringWidth / 2) - 5, y, stringWidth + 10, stringWidth * 4, text));
         }
     }
 

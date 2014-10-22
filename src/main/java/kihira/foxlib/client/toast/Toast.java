@@ -53,7 +53,7 @@ public class Toast {
                 int colour = 0xFFFFFF | (opacity << 24);
                 for (int i = 0; i < message.size(); i++) {
                     String s = message.get(i);
-                    fontRenderer.drawStringWithShadow(s, xPos + 5, yPos + 4 + (fontRenderer.FONT_HEIGHT * i), colour);
+                    fontRenderer.drawStringWithShadow(s, (xPos + width / 2) - (fontRenderer.getStringWidth(s) / 2), yPos + 4 + (fontRenderer.FONT_HEIGHT * i), colour);
                 }
                 GL11.glDisable(GL11.GL_BLEND);
                 GL11.glColor4f(0F, 0F, 0F, 1F);
