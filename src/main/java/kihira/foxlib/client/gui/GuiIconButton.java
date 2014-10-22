@@ -13,6 +13,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
+import scala.actors.threadpool.Arrays;
 
 import java.util.List;
 
@@ -23,10 +24,10 @@ public class GuiIconButton extends GuiButton implements ITooltip {
     private final Icons icon;
     private final List<String> tooltip;
 
-    public GuiIconButton(int id, int x, int y, Icons icon, List<String> tooltip) {
+    public GuiIconButton(int id, int x, int y, Icons icon, String ... tooltips) {
         super(id, x, y, 16 ,16, "");
         this.icon = icon;
-        this.tooltip = tooltip;
+        this.tooltip = Arrays.asList(tooltips);
     }
 
     public void drawButton(Minecraft minecraft, int mouseX, int mouseY) {
