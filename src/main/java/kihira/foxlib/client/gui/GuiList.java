@@ -25,11 +25,12 @@ public class GuiList extends GuiListExtended {
         super(Minecraft.getMinecraft(), width, height, top, bottom, slotHeight);
         this.parent = parent;
         this.entries = entries;
+        left = -3;
     }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float p_148128_3_) {
-        RenderHelper.startGlScissor(this.left, this.top, this.width, this.height);
+        RenderHelper.startGlScissor(this.left, this.top, this.width + 3, this.height);
         super.drawScreen(mouseX, mouseY, p_148128_3_);
         RenderHelper.endGlScissor();
     }
@@ -61,6 +62,11 @@ public class GuiList extends GuiListExtended {
     @Override
     protected int getSize() {
         return this.entries.size();
+    }
+
+    @Override
+    public int getListWidth() {
+        return width - 8;
     }
 
     public int getCurrrentIndex() {

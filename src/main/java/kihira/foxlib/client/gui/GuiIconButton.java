@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class GuiIconButton extends GuiButton implements ITooltip {
@@ -23,10 +24,10 @@ public class GuiIconButton extends GuiButton implements ITooltip {
     private final Icons icon;
     private final List<String> tooltip;
 
-    public GuiIconButton(int id, int x, int y, Icons icon, List<String> tooltip) {
+    public GuiIconButton(int id, int x, int y, Icons icon, String ... tooltips) {
         super(id, x, y, 16 ,16, "");
         this.icon = icon;
-        this.tooltip = tooltip;
+        this.tooltip = Arrays.asList(tooltips);
     }
 
     public void drawButton(Minecraft minecraft, int mouseX, int mouseY) {
@@ -35,7 +36,6 @@ public class GuiIconButton extends GuiButton implements ITooltip {
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             GL11.glEnable(GL11.GL_BLEND);
             OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
             //Check mouse over
             field_146123_n = mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height;
@@ -52,7 +52,8 @@ public class GuiIconButton extends GuiButton implements ITooltip {
 
     public enum Icons {
         UNDO(0, 0),
-        QUESTION(16, 0);
+        QUESTION(16, 0),
+        EYEDROPPER(32, 0);
 
         public final int u;
         public final int v;

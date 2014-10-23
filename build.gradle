@@ -36,7 +36,7 @@ dependencies {
 
 project.ext {
     massive = "0"
-    major = "5"
+    major = "6"
     minor = "0"
     mcVersion = "1.7.10"
     forgeVersion = "10.13.0.1180"
