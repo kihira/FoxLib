@@ -21,7 +21,7 @@ public class GuiIconButton extends GuiButton implements ITooltip {
 
     public static final ResourceLocation iconsTextures = new ResourceLocation("foxlib", "textures/gui/icons.png");
 
-    private final Icons icon;
+    protected final Icons icon;
     private final List<String> tooltip;
 
     public GuiIconButton(int id, int x, int y, Icons icon, String ... tooltips) {
@@ -45,15 +45,62 @@ public class GuiIconButton extends GuiButton implements ITooltip {
         }
     }
 
+    public void setHover(boolean hover) {
+        field_146123_n = hover;
+    }
+
     @Override
     public List<String> getTooltip(int mouseX, int mouseY) {
         return tooltip;
     }
 
+    public static class GuiIconToggleButton extends GuiIconButton {
+
+        public boolean toggled;
+
+        public GuiIconToggleButton(int id, int x, int y, Icons icon, String... tooltips) {
+            super(id, x, y, icon, tooltips);
+        }
+
+        @Override
+        public boolean mousePressed(Minecraft minecraft, int mouseX, int mouseY) {
+            if (this.visible && mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height) {
+                this.toggled = !this.toggled;
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public void drawButton(Minecraft minecraft, int mouseX, int mouseY) {
+            if (visible && toggled) {
+                minecraft.getTextureManager().bindTexture(iconsTextures);
+                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+                GL11.glEnable(GL11.GL_BLEND);
+                OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+                //Check mouse over
+                field_146123_n = mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height;
+                drawTexturedModalRect(xPosition, yPosition, icon.u, icon.v + 32, 16, 16);
+            }
+            else {
+                super.drawButton(minecraft, mouseX, mouseY);
+            }
+        }
+    }
+
     public enum Icons {
         UNDO(0, 0),
         QUESTION(16, 0),
-        EYEDROPPER(32, 0);
+        EYEDROPPER(32, 0),
+        SAVE(48, 0),
+        DELETE(64, 0),
+        COPY(80, 0),
+        STAR(96, 0),
+        EDIT(112, 0),
+        UPLOAD(128, 0),
+        DOWNLOAD(144, 0),
+        SEARCH(160, 0),
+        SERVER(176, 0);
 
         public final int u;
         public final int v;

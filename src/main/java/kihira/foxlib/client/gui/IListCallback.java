@@ -10,7 +10,7 @@ package kihira.foxlib.client.gui;
 
 import net.minecraft.client.gui.GuiListExtended;
 
-public interface IListCallback {
+public interface IListCallback<T extends GuiListExtended.IGuiListEntry> {
 
-    public boolean onEntrySelected(GuiList guiList, int index, GuiListExtended.IGuiListEntry entry);
+    public boolean onEntrySelected(GuiList guiList, int index, T entry);
 }
