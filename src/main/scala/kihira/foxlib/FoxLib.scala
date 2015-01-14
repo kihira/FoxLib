@@ -12,9 +12,7 @@ import java.io.File
 
 import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
-import cpw.mods.fml.common.network.NetworkCheckHandler
 import cpw.mods.fml.common.{Mod, SidedProxy}
-import cpw.mods.fml.relauncher.Side
 import kihira.foxlib.proxy.CommonProxy
 import net.minecraftforge.common.config.Configuration
 import org.apache.logging.log4j.{LogManager, Logger}
@@ -44,10 +42,5 @@ object FoxLib {
         fancySkulls = config.getBoolean("Fancy skull rendering", "client", true, "Renders player heads with the hair layer and 3D in inventory")
 
         if (config.hasChanged) config.save()
-    }
-
-    @NetworkCheckHandler
-    def checkRemoteVersions(versions: Map[String, String], side: Side): Boolean = {
-        true
     }
 }

@@ -8,6 +8,7 @@
 
 package kihira.foxlib.client.gui;
 
+import cpw.mods.fml.client.config.GuiButtonExt;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -32,7 +33,7 @@ public abstract class GuiBaseScreen extends GuiScreen {
         }
     }
 
-    public class GuiButtonTooltip extends GuiButton implements ITooltip {
+    public class GuiButtonTooltip extends GuiButtonExt implements ITooltip {
         private final int maxTextWidth;
         protected final String[] tooltips;
 

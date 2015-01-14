@@ -100,7 +100,9 @@ public class GuiIconButton extends GuiButton implements ITooltip {
         UPLOAD(128, 0),
         DOWNLOAD(144, 0),
         SEARCH(160, 0),
-        SERVER(176, 0);
+        SERVER(176, 0),
+        IMPORT(192, 0),
+        EXPORT(208, 0);
 
         public final int u;
         public final int v;
