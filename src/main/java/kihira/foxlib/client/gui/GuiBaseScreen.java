@@ -15,7 +15,6 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class GuiBaseScreen extends GuiScreen {
@@ -35,24 +34,22 @@ public abstract class GuiBaseScreen extends GuiScreen {
 
     public class GuiButtonTooltip extends GuiButtonExt implements ITooltip {
         private final int maxTextWidth;
-        protected final String[] tooltips;
+        protected final ArrayList<String> tooltip = new ArrayList<String>();
 
+        @SuppressWarnings("unchecked")
         public GuiButtonTooltip(int id, int x, int y, int width, int height, String text, int maxTextWidth, String... tooltips) {
             super(id, x, y, width, height, text);
             this.maxTextWidth = maxTextWidth;
-            this.tooltips = tooltips;
+            if (tooltips != null && tooltips.length > 0) {
+                for (String s : tooltips) {
+                    tooltip.addAll(fontRendererObj.listFormattedStringToWidth(s, this.maxTextWidth));
+                }
+            }
         }
 
         @Override
-        @SuppressWarnings("unchecked")
         public List<String> getTooltip(int mouseX, int mouseY) {
-            List<String> list = new ArrayList<String>();
-            if (this.tooltips != null && this.tooltips.length > 0) {
-                for (String s : this.tooltips) {
-                    list.addAll(fontRendererObj.listFormattedStringToWidth(s, this.maxTextWidth));
-                }
-            }
-            return list;
+            return this.tooltip;
         }
     }
 
@@ -73,12 +70,10 @@ public abstract class GuiBaseScreen extends GuiScreen {
 
         @Override
         public void func_146111_b(int x, int y) {
-            if (this.tooltips != null && this.tooltips.length > 0) {
-                List<String> list = new ArrayList<String>();
-                Collections.addAll(list, this.tooltips);
-                list.add((!this.enabled ? EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC.toString() + "Enabled" : EnumChatFormatting.RED + EnumChatFormatting.ITALIC.toString() + "Disabled"));
-                func_146283_a(list, x, y);
-            }
+            ArrayList<String> list = new ArrayList<String>();
+            list.addAll(this.tooltip);
+            list.add((!this.enabled ? EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC.toString() + "Enabled" : EnumChatFormatting.RED + EnumChatFormatting.ITALIC.toString() + "Disabled"));
+            func_146283_a(list, x, y);
         }
     }
 }
