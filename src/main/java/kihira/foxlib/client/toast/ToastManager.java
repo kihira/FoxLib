@@ -64,11 +64,13 @@ public class ToastManager {
 
     @SubscribeEvent
     public void onClientTickPost(TickEvent.ClientTickEvent event) {
-        Iterator<Toast> toasts = this.toasts.iterator();
-        while (toasts.hasNext()) {
-            Toast toast = toasts.next();
-            toast.time--;
-            if (toast.time <= 0) toasts.remove();
+        if (event.phase == TickEvent.Phase.END) {
+            Iterator<Toast> toasts = this.toasts.iterator();
+            while (toasts.hasNext()) {
+                Toast toast = toasts.next();
+                toast.time--;
+                if (toast.time <= 0) toasts.remove();
+            }
         }
     }
 
