@@ -15,13 +15,13 @@ import net.minecraft.client.renderer.Tessellator;
 
 import java.util.List;
 
-public class GuiList extends GuiListExtended {
+public class GuiList<T extends GuiListExtended.IGuiListEntry> extends GuiListExtended {
 
-    private final IListCallback parent;
-    private final List<? extends IGuiListEntry> entries;
+    private final IListCallback<T> parent;
+    private final List<T> entries;
     private int currrentIndex;
 
-    public GuiList(IListCallback parent, int width, int height, int top, int bottom, int slotHeight, List<? extends IGuiListEntry> entries) {
+    public GuiList(IListCallback<T> parent, int width, int height, int top, int bottom, int slotHeight, List<T> entries) {
         super(Minecraft.getMinecraft(), width, height, top, bottom, slotHeight);
         this.parent = parent;
         this.entries = entries;
@@ -55,7 +55,7 @@ public class GuiList extends GuiListExtended {
     }
 
     @Override
-    public IGuiListEntry getListEntry(int index) {
+    public T getListEntry(int index) {
         return this.entries.get(index);
     }
 
@@ -77,7 +77,7 @@ public class GuiList extends GuiListExtended {
         this.currrentIndex = currrentIndex;
     }
 
-    public List<? extends IGuiListEntry> getEntries() {
+    public List<T> getEntries() {
         return this.entries;
     }
 }

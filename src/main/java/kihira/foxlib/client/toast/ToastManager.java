@@ -46,10 +46,10 @@ public class ToastManager {
         int stringWidth = fontRenderer.getStringWidth(text);
         if (stringWidth > maxWidth) {
             List<String> strings = fontRenderer.listFormattedStringToWidth(text, maxWidth);
-            toasts.add(new Toast(x - (maxWidth / 2) - 5, y, maxWidth + 10, maxWidth * 2, strings.toArray(new String[strings.size()])));
+            toasts.add(new Toast(x - (maxWidth / 2) - 5, y, maxWidth + 10, text.length() * 3, strings.toArray(new String[strings.size()])));
         }
         else {
-            toasts.add(new Toast(x - (stringWidth / 2) - 5, y, stringWidth + 10, stringWidth * 4, text));
+            toasts.add(new Toast(x - (stringWidth / 2) - 5, y, stringWidth + 10, text.length() * 3, text));
         }
     }
 
@@ -64,11 +64,13 @@ public class ToastManager {
 
     @SubscribeEvent
     public void onClientTickPost(TickEvent.ClientTickEvent event) {
-        Iterator<Toast> toasts = this.toasts.iterator();
-        while (toasts.hasNext()) {
-            Toast toast = toasts.next();
-            toast.time--;
-            if (toast.time <= 0) toasts.remove();
+        if (event.phase == TickEvent.Phase.END) {
+            Iterator<Toast> toasts = this.toasts.iterator();
+            while (toasts.hasNext()) {
+                Toast toast = toasts.next();
+                toast.time--;
+                if (toast.time <= 0) toasts.remove();
+            }
         }
     }
 

@@ -9,11 +9,9 @@
 package kihira.foxlib.client.render
 
 import java.util
-import java.util.Calendar
 
 import com.mojang.authlib.GameProfile
 import com.mojang.authlib.minecraft.MinecraftProfileTexture
-import kihira.foxlib.common.EntityHelper
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.AbstractClientPlayer
 import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer
@@ -60,15 +58,6 @@ object BlockSkullRenderer extends TileEntitySkullRenderer {
             GL11.glEnable(GL12.GL_RESCALE_NORMAL)
             GL11.glScalef(-1.0F, -1.0F, 1.0F)
             GL11.glEnable(GL11.GL_ALPHA_TEST)
-            if (skull != null) {
-                val hour: Int = Calendar.getInstance.get(Calendar.HOUR_OF_DAY)
-                if (hour >= 19 && hour <= 21) {
-                    val floats: Array[Float] = EntityHelper.getPitchYawToEntity(skull.xCoord, skull.yCoord, skull.zCoord, Minecraft.getMinecraft.thePlayer)
-                    GL11.glRotatef(floats(1) + 180F, 0F, 1F, 0F)
-                    GL11.glRotatef(floats(0), 1F, 0F, 0F)
-                    rot = 0F
-                }
-            }
             ItemSkullRenderer.modelSkull.render(null, 0F, 0F, 0F, rot, 0F, 0.0625F)
             GL11.glPopMatrix()
         }
