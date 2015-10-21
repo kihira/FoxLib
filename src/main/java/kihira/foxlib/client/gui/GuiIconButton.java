@@ -38,15 +38,15 @@ public class GuiIconButton extends GuiButton implements ITooltip {
             OpenGlHelper.glBlendFunc(770, 771, 1, 0);
 
             //Check mouse over
-            field_146123_n = mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height;
-            int textureOffset = getHoverState(field_146123_n);
+            hovered = mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height;
+            int textureOffset = getHoverState(hovered);
 
             drawTexturedModalRect(xPosition, yPosition, icon.u, icon.v + (textureOffset * 16), 16, 16);
         }
     }
 
     public void setHover(boolean hover) {
-        field_146123_n = hover;
+        hovered = hover;
     }
 
     @Override
@@ -79,7 +79,7 @@ public class GuiIconButton extends GuiButton implements ITooltip {
                 GL11.glEnable(GL11.GL_BLEND);
                 OpenGlHelper.glBlendFunc(770, 771, 1, 0);
                 //Check mouse over
-                field_146123_n = mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height;
+                hovered = mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height;
                 drawTexturedModalRect(xPosition, yPosition, icon.u, icon.v + 32, 16, 16);
             }
             else {

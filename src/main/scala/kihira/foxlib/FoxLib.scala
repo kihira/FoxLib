@@ -10,9 +10,9 @@ package kihira.foxlib
 
 import java.io.File
 
-import cpw.mods.fml.common.Mod.EventHandler
-import cpw.mods.fml.common.event.FMLPreInitializationEvent
-import cpw.mods.fml.common.{Mod, SidedProxy}
+import net.minecraftforge.fml.common.Mod.EventHandler
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
+import net.minecraftforge.fml.common.{Mod, SidedProxy}
 import kihira.foxlib.proxy.CommonProxy
 import net.minecraftforge.common.config.Configuration
 import org.apache.logging.log4j.{LogManager, Logger}
@@ -33,7 +33,6 @@ object FoxLib {
     def onPreInit(e: FMLPreInitializationEvent) {
         loadConfig(e.getSuggestedConfigurationFile)
         proxy.registerEventHandlers()
-        proxy.registerRenderers()
     }
 
     private def loadConfig(file: File) = {

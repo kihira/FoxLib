@@ -1,6 +1,7 @@
 package truetyper;
 
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
@@ -225,23 +226,23 @@ public class TrueTypeFont {
 		float SrcHeight = srcY2 - srcY;
 		float RenderWidth = (SrcWidth / textureWidth);
 		float RenderHeight = (SrcHeight / textureHeight);
-		Tessellator t = Tessellator.instance;
+		WorldRenderer renderer = Tessellator.getInstance().getWorldRenderer();
 
-		//t.setColorRGBA_F(0f, 0f, 0f, 1f);
+		//renderer.setColorRGBA_F(0f, 0f, 0f, 1f);
 
-		t.addVertexWithUV(drawX, drawY, 0, TextureSrcX, TextureSrcY);
+		renderer.addVertexWithUV(drawX, drawY, 0, TextureSrcX, TextureSrcY);
 		//GL11.glTexCoord2f(TextureSrcX, TextureSrcY);
 		//GL11.glVertex2f(drawX, drawY);
 
-		t.addVertexWithUV(drawX, drawY + DrawHeight, 0, TextureSrcX, TextureSrcY + RenderHeight);
+		renderer.addVertexWithUV(drawX, drawY + DrawHeight, 0, TextureSrcX, TextureSrcY + RenderHeight);
 		//GL11.glTexCoord2f(TextureSrcX, TextureSrcY + RenderHeight);
 		//GL11.glVertex2f(drawX, drawY + DrawHeight);
 
-		t.addVertexWithUV(drawX + DrawWidth, drawY + DrawHeight, 0, TextureSrcX + RenderWidth, TextureSrcY + RenderHeight);
+		renderer.addVertexWithUV(drawX + DrawWidth, drawY + DrawHeight, 0, TextureSrcX + RenderWidth, TextureSrcY + RenderHeight);
 		//GL11.glTexCoord2f(TextureSrcX + RenderWidth, TextureSrcY + RenderHeight);
 		//GL11.glVertex2f(drawX + DrawWidth, drawY + DrawHeight);
 
-		t.addVertexWithUV(drawX + DrawWidth, drawY, 0, TextureSrcX + RenderWidth, TextureSrcY);
+		renderer.addVertexWithUV(drawX + DrawWidth, drawY, 0, TextureSrcX + RenderWidth, TextureSrcY);
 		//GL11.glTexCoord2f(TextureSrcX + RenderWidth, TextureSrcY);
 		//GL11.glVertex2f(drawX + DrawWidth, drawY);
 	}
@@ -341,10 +342,10 @@ public class TrueTypeFont {
 
 		}
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, fontTextureID);
-		Tessellator t = Tessellator.instance;
-		t.startDrawingQuads();
+		WorldRenderer renderer = Tessellator.getInstance().getWorldRenderer();
+		renderer.startDrawingQuads();
 	//	GL11.glBegin(GL11.GL_QUADS);
-		if(rgba.length == 4) t.setColorRGBA_F(rgba[0], rgba[1], rgba[2], rgba[3]);
+		if(rgba.length == 4) renderer.setColorRGBA_F(rgba[0], rgba[1], rgba[2], rgba[3]);
 		while (i >= startIndex && i <= endIndex) {
 
 			charCurrent = whatchars.charAt(i);
@@ -389,7 +390,7 @@ public class TrueTypeFont {
 
 			}
 		}
-		t.draw();
+		renderer.finishDrawing();
 	//	GL11.glEnd();
 
 		GL11.glPopMatrix();

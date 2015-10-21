@@ -8,9 +8,6 @@
 
 package kihira.foxlib.client.toast;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.profiler.Profiler;
@@ -18,6 +15,9 @@ import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -35,14 +35,14 @@ public class ToastManager {
     }
 
     public void createToast(int x, int y, String text) {
-        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
+        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
         int stringWidth = fontRenderer.getStringWidth(text);
         toasts.add(new Toast(x, y, stringWidth + 10,  stringWidth * 3, text));
     }
 
     @SuppressWarnings("unchecked")
     public void createCenteredToast(int x, int y, int maxWidth, String text) {
-        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
+        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
         int stringWidth = fontRenderer.getStringWidth(text);
         if (stringWidth > maxWidth) {
             List<String> strings = fontRenderer.listFormattedStringToWidth(text, maxWidth);
@@ -90,7 +90,7 @@ public class ToastManager {
             Profiler profiler = Minecraft.getMinecraft().mcProfiler;
             profiler.startSection("toastNotification");
             for (Toast toast : toasts) {
-                toast.drawToast(event.mouseX, event.mouseY);
+                // TODO toast.drawToast(event.mouseX, event.mouseY);
             }
             profiler.endSection();
         }

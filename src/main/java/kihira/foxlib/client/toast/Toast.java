@@ -34,14 +34,14 @@ public class Toast {
         this.width = width;
         this.time = time;
         this.message = Arrays.asList(message);
-        height = this.message.size() * Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT + 7;
+        height = this.message.size() * Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT + 7;
     }
 
     public void onMouseEvent(MouseEvent mouseEvent) {}
 
     public void drawToast(int mouseX, int mouseY) {
         if (this.time > 0) {
-            FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
+            FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
             mouseOver = mouseX >= xPos && mouseY >= yPos && mouseX < xPos + width && mouseY < yPos + height;
             int opacity = mouseOver ? 255 : (int) (this.time * 256F / 10F);
             if (opacity > 255) opacity = 255;

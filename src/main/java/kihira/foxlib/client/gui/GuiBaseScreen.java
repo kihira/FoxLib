@@ -8,11 +8,10 @@
 
 package kihira.foxlib.client.gui;
 
-import cpw.mods.fml.client.config.GuiButtonExt;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraftforge.fml.client.config.GuiButtonExt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +25,8 @@ public abstract class GuiBaseScreen extends GuiScreen {
         //Tooltips
         for (Object obj : this.buttonList) {
             //Has tooltip and has mouse over
-            if (obj instanceof ITooltip && ((GuiButton) obj).func_146115_a()) {
-                func_146283_a(((ITooltip) obj).getTooltip(mouseX, mouseY), mouseX, mouseY);
+            if (obj instanceof ITooltip && ((GuiButton) obj).isMouseOver()) {
+                drawHoveringText(((ITooltip) obj).getTooltip(mouseX, mouseY), mouseX, mouseY);
             }
         }
     }
@@ -68,12 +67,12 @@ public abstract class GuiBaseScreen extends GuiScreen {
             return false;
         }
 
-        @Override
-        public void func_146111_b(int x, int y) {
+/*        @Override
+        TODO public void func_146111_b(int x, int y) {
             ArrayList<String> list = new ArrayList<String>();
             list.addAll(this.tooltip);
             list.add((!this.enabled ? EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC.toString() + "Enabled" : EnumChatFormatting.RED + EnumChatFormatting.ITALIC.toString() + "Disabled"));
-            func_146283_a(list, x, y);
-        }
+            drawHoveringText(list, x, y);
+        }*/
     }
 }

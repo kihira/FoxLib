@@ -14,7 +14,8 @@ import java.util
 import javax.imageio.ImageIO
 
 import com.mojang.authlib.minecraft.MinecraftProfileTexture
-import cpw.mods.fml.common.ObfuscationReflectionHelper
+import net.minecraft.client.resources.DefaultPlayerSkin
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper
 import kihira.foxlib.FoxLib
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.AbstractClientPlayer
@@ -29,13 +30,13 @@ object TextureHelper {
         var bufferedImage: BufferedImage = null
         var inputStream: InputStream = null
         val mc: Minecraft = Minecraft.getMinecraft
-        val map: util.Map[_, _] = mc.func_152342_ad.func_152788_a(player.getGameProfile)
+        val map: util.Map[_, _] = mc.getSkinManager.loadSkinFromCache(player.getGameProfile)
         var skintex: ITextureObject = null
-        val playerName: String = player.getCommandSenderName
+        val playerName: String = player.getName
 
         try {
             if (map.containsKey(MinecraftProfileTexture.Type.SKIN)) {
-                skintex = mc.getTextureManager.getTexture(mc.func_152342_ad.func_152792_a(map.get(MinecraftProfileTexture.Type.SKIN).asInstanceOf[MinecraftProfileTexture], MinecraftProfileTexture.Type.SKIN))
+                skintex = mc.getTextureManager.getTexture(mc.getSkinManager.loadSkin(map.get(MinecraftProfileTexture.Type.SKIN).asInstanceOf[MinecraftProfileTexture], MinecraftProfileTexture.Type.SKIN))
             }
             else {
                 skintex = mc.getTextureManager.getTexture(player.getLocationSkin)
@@ -53,7 +54,7 @@ object TextureHelper {
                     bufferedImage.setRGB(0, 0, width, height, imagedata.getTextureData, 0, width)
                 case _=>
                     FoxLib.logger.warn(s"Could not fetch $playerName skin, loading default skin")
-                    inputStream = Minecraft.getMinecraft.getResourceManager.getResource(AbstractClientPlayer.locationStevePng).getInputStream
+                    inputStream = Minecraft.getMinecraft.getResourceManager.getResource(DefaultPlayerSkin.getDefaultSkinLegacy).getInputStream
                     bufferedImage = ImageIO.read(inputStream)
             }
         }

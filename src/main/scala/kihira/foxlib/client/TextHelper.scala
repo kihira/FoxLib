@@ -11,7 +11,7 @@ package kihira.foxlib.client
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.FontRenderer
 import net.minecraft.client.renderer.entity.RenderManager
-import net.minecraft.client.renderer.{OpenGlHelper, Tessellator}
+import net.minecraft.client.renderer.{WorldRenderer, OpenGlHelper, Tessellator}
 import org.lwjgl.opengl.GL11
 
 object TextHelper {
@@ -27,9 +27,9 @@ object TextHelper {
      * @param colour:[[Int]] The Minecraft version of colour
      */
     def drawWrappedMessageFacingPlayer(x:Double, y:Double, z:Double, scale:Float = 0.016666668F, maxWidth:Int, xOffset:Double, text:String, colour:Int = -1) {
-        val fontrenderer: FontRenderer = Minecraft.getMinecraft.fontRenderer
-        val tessellator: Tessellator = Tessellator.instance
-        val renderManager: RenderManager = RenderManager.instance
+        val fontrenderer: FontRenderer = Minecraft.getMinecraft.fontRendererObj
+        val renderer: WorldRenderer = Tessellator.getInstance().getWorldRenderer
+        val renderManager: RenderManager = Minecraft.getMinecraft.getRenderManager
         val height: Double = fontrenderer.listFormattedStringToWidth(text, maxWidth).size * fontrenderer.FONT_HEIGHT
 
         GL11.glPushMatrix()
@@ -43,13 +43,13 @@ object TextHelper {
         OpenGlHelper.glBlendFunc(770, 771, 1, 0)
         GL11.glDisable(GL11.GL_TEXTURE_2D)
 
-        tessellator.startDrawingQuads()
-        tessellator.setColorRGBA_F(0.0F, 0.0F, 0.0F, 0.25F)
-        tessellator.addVertex(xOffset - 1, -1, 0.0D)
-        tessellator.addVertex(xOffset - 1, height, 0.0D)
-        tessellator.addVertex(xOffset + maxWidth + 1, height, 0.0D)
-        tessellator.addVertex(xOffset + maxWidth + 1, -1, 0.0D)
-        tessellator.draw
+        renderer.startDrawingQuads()
+        renderer.setColorRGBA_F(0.0F, 0.0F, 0.0F, 0.25F)
+        renderer.addVertex(xOffset - 1, -1, 0.0D)
+        renderer.addVertex(xOffset - 1, height, 0.0D)
+        renderer.addVertex(xOffset + maxWidth + 1, height, 0.0D)
+        renderer.addVertex(xOffset + maxWidth + 1, -1, 0.0D)
+        renderer.finishDrawing()
 
         GL11.glEnable(GL11.GL_TEXTURE_2D)
         GL11.glTranslatef(0F, 0F, -0.1F) //Move render forward a little to prevent flickering
@@ -73,9 +73,9 @@ object TextHelper {
      * @param background:[[Boolean]] Whether to render the faint black background
      */
     def drawMultiLineMessageFacingPlayer(x:Double, y:Double, z:Double, scale:Float = 0.016666668F, text:Array[String], colour:Int = -1, center:Boolean = true, background:Boolean = true) {
-        val fontrenderer: FontRenderer = Minecraft.getMinecraft.fontRenderer
-        val tessellator: Tessellator = Tessellator.instance
-        val renderManager: RenderManager = RenderManager.instance
+        val fontrenderer: FontRenderer = Minecraft.getMinecraft.fontRendererObj
+        val renderer: WorldRenderer = Tessellator.getInstance().getWorldRenderer
+        val renderManager: RenderManager = Minecraft.getMinecraft.getRenderManager
         val height: Double = text.size * fontrenderer.FONT_HEIGHT
         val width: Int = {
             var wid, w = 0
@@ -99,22 +99,22 @@ object TextHelper {
         GL11.glDisable(GL11.GL_TEXTURE_2D)
 
         if (background) {
-            tessellator.startDrawingQuads()
-            tessellator.setColorRGBA_F(0F, 0F, 0F, 0.25F)
+            renderer.startDrawingQuads()
+            renderer.setColorRGBA_F(0F, 0F, 0F, 0.25F)
             if (center) {
                 //We add the offset of the font height to move it to the correct position
-                tessellator.addVertex(-(width / 2) - 1, fontrenderer.FONT_HEIGHT, 0.0D)
-                tessellator.addVertex(-(width / 2) - 1, -height + fontrenderer.FONT_HEIGHT - 1, 0.0D)
-                tessellator.addVertex((width / 2) + 1, -height + fontrenderer.FONT_HEIGHT - 1, 0.0D)
-                tessellator.addVertex((width / 2) + 1, fontrenderer.FONT_HEIGHT, 0.0D)
+                renderer.addVertex(-(width / 2) - 1, fontrenderer.FONT_HEIGHT, 0.0D)
+                renderer.addVertex(-(width / 2) - 1, -height + fontrenderer.FONT_HEIGHT - 1, 0.0D)
+                renderer.addVertex((width / 2) + 1, -height + fontrenderer.FONT_HEIGHT - 1, 0.0D)
+                renderer.addVertex((width / 2) + 1, fontrenderer.FONT_HEIGHT, 0.0D)
             }
             else {
-                tessellator.addVertex(-1, height / 2, 0.0D)
-                tessellator.addVertex(-1, -(height / 2) - 1, 0.0D)
-                tessellator.addVertex(width + 1, -(height / 2) - 1, 0.0D)
-                tessellator.addVertex(width + 1, height / 2, 0.0D)
+                renderer.addVertex(-1, height / 2, 0.0D)
+                renderer.addVertex(-1, -(height / 2) - 1, 0.0D)
+                renderer.addVertex(width + 1, -(height / 2) - 1, 0.0D)
+                renderer.addVertex(width + 1, height / 2, 0.0D)
             }
-            tessellator.draw
+            renderer.finishDrawing()
         }
 
         GL11.glEnable(GL11.GL_TEXTURE_2D)

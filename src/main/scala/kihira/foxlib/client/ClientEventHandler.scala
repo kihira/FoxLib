@@ -10,9 +10,8 @@ package kihira.foxlib.client
 
 import java.util
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent
 import kihira.foxlib.FoxLib
-import net.minecraft.block.Block
+import net.minecraft.block.state.IBlockState
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.{OpenGlHelper, RenderGlobal}
 import net.minecraft.entity.player.EntityPlayer
@@ -20,6 +19,7 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import net.minecraftforge.client.event.DrawBlockHighlightEvent
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.lwjgl.opengl.GL11
 
 object ClientEventHandler {
@@ -28,14 +28,13 @@ object ClientEventHandler {
     def onBlockHighlight(e: DrawBlockHighlightEvent) = {
         if (FoxLib.showCollisionBoxes && e.target.typeOfHit == MovingObjectType.BLOCK) {
             val player: EntityPlayer = Minecraft.getMinecraft.thePlayer
-            val block: Block = Minecraft.getMinecraft.theWorld.getBlock(e.target.blockX, e.target.blockY, e.target.blockZ)
+            val block: IBlockState = Minecraft.getMinecraft.theWorld.getBlockState(e.target.getBlockPos)
             val xOffset: Double = player.prevPosX + (player.posX - player.prevPosX) * e.partialTicks
             val yOffset: Double = player.prevPosY + (player.posY - player.prevPosY) * e.partialTicks
             val zOffset: Double = player.prevPosZ + (player.posZ - player.prevPosZ) * e.partialTicks
             val collisionBoxes: util.List[AxisAlignedBB] = new util.ArrayList[AxisAlignedBB]()
 
-            block.addCollisionBoxesToList(Minecraft.getMinecraft.theWorld, e.target.blockX, e.target.blockY, e.target.blockZ,
-                TileEntity.INFINITE_EXTENT_AABB, collisionBoxes, null)
+            block.getBlock.addCollisionBoxesToList(Minecraft.getMinecraft.theWorld, e.target.getBlockPos, block, TileEntity.INFINITE_EXTENT_AABB, collisionBoxes, null)
 
             //Render the box(es)
             GL11.glPushMatrix()
@@ -47,7 +46,7 @@ object ClientEventHandler {
             GL11.glDepthMask(false)
             import scala.collection.JavaConversions._
             for (collisionBox <- collisionBoxes) {
-                RenderGlobal.drawOutlinedBoundingBox(collisionBox.getOffsetBoundingBox(-xOffset, -yOffset, -zOffset), -1)
+                RenderGlobal.drawOutlinedBoundingBox(collisionBox.offset(-xOffset, -yOffset, -zOffset), -1)
             }
             GL11.glDepthMask(true)
             GL11.glEnable(GL11.GL_TEXTURE_2D)
