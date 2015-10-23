@@ -1,14 +1,15 @@
 plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.1"
 }
+apply plugin: 'scala'
 
 group= "kihira"
 archivesBaseName = "FoxLib"
 
 project.ext {
     massive = "0"
-    major = "7"
-    minor = "0"
+    major = "8"
+    minor = "1"
     mcVersion = "1.8"
     forgeVersion = "11.14.3.1521"
     buildVersion = System.getenv("BUILD_NUMBER")
