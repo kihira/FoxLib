@@ -19,7 +19,7 @@ archivesBaseName = "FoxLib"
 project.ext {
     massive = "0"
     major = "8"
-    minor = "1"
+    minor = "2"
     mcVersion = "1.8.9"
     forgeVersion = "11.15.1.1855"
     buildVersion = System.getenv("BUILD_NUMBER")
