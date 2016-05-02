@@ -18,7 +18,7 @@ public class RenderHelper {
 
     public static void startGlScissor(int x, int y, int width, int height) {
         Minecraft mc = Minecraft.getMinecraft();
-        ScaledResolution reso = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+        ScaledResolution reso = new ScaledResolution(mc);
 
         double scaleW = (double)mc.displayWidth / reso.getScaledWidth_double();
         double scaleH = (double)mc.displayHeight / reso.getScaledHeight_double();

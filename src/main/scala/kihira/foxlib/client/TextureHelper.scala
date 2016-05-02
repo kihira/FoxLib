@@ -32,7 +32,7 @@ object TextureHelper {
         val mc: Minecraft = Minecraft.getMinecraft
         val map: util.Map[_, _] = mc.getSkinManager.loadSkinFromCache(player.getGameProfile)
         var skintex: ITextureObject = null
-        val playerName: String = player.getName
+        val playerName: String = player.getDisplayNameString
 
         try {
             if (map.containsKey(MinecraftProfileTexture.Type.SKIN)) {

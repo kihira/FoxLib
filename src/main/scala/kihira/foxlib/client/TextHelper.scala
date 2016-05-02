@@ -11,7 +11,8 @@ package kihira.foxlib.client
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.FontRenderer
 import net.minecraft.client.renderer.entity.RenderManager
-import net.minecraft.client.renderer.{WorldRenderer, OpenGlHelper, Tessellator}
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats
+import net.minecraft.client.renderer.{OpenGlHelper, Tessellator, WorldRenderer}
 import org.lwjgl.opengl.GL11
 
 object TextHelper {
@@ -43,12 +44,11 @@ object TextHelper {
         OpenGlHelper.glBlendFunc(770, 771, 1, 0)
         GL11.glDisable(GL11.GL_TEXTURE_2D)
 
-        renderer.startDrawingQuads()
-        renderer.setColorRGBA_F(0.0F, 0.0F, 0.0F, 0.25F)
-        renderer.addVertex(xOffset - 1, -1, 0.0D)
-        renderer.addVertex(xOffset - 1, height, 0.0D)
-        renderer.addVertex(xOffset + maxWidth + 1, height, 0.0D)
-        renderer.addVertex(xOffset + maxWidth + 1, -1, 0.0D)
+        renderer.func_181668_a(7, DefaultVertexFormats.field_181706_f)
+        renderer.func_181662_b(xOffset - 1, -1, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
+        renderer.func_181662_b(xOffset - 1, height, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
+        renderer.func_181662_b(xOffset + maxWidth + 1, height, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
+        renderer.func_181662_b(xOffset + maxWidth + 1, -1, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
         renderer.finishDrawing()
 
         GL11.glEnable(GL11.GL_TEXTURE_2D)
@@ -99,20 +99,19 @@ object TextHelper {
         GL11.glDisable(GL11.GL_TEXTURE_2D)
 
         if (background) {
-            renderer.startDrawingQuads()
-            renderer.setColorRGBA_F(0F, 0F, 0F, 0.25F)
+            renderer.func_181668_a(7, DefaultVertexFormats.field_181706_f)
             if (center) {
                 //We add the offset of the font height to move it to the correct position
-                renderer.addVertex(-(width / 2) - 1, fontrenderer.FONT_HEIGHT, 0.0D)
-                renderer.addVertex(-(width / 2) - 1, -height + fontrenderer.FONT_HEIGHT - 1, 0.0D)
-                renderer.addVertex((width / 2) + 1, -height + fontrenderer.FONT_HEIGHT - 1, 0.0D)
-                renderer.addVertex((width / 2) + 1, fontrenderer.FONT_HEIGHT, 0.0D)
+                renderer.func_181662_b(-(width / 2) - 1, fontrenderer.FONT_HEIGHT, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
+                renderer.func_181662_b(-(width / 2) - 1, -height + fontrenderer.FONT_HEIGHT - 1, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
+                renderer.func_181662_b((width / 2) + 1, -height + fontrenderer.FONT_HEIGHT - 1, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
+                renderer.func_181662_b((width / 2) + 1, fontrenderer.FONT_HEIGHT, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
             }
             else {
-                renderer.addVertex(-1, height / 2, 0.0D)
-                renderer.addVertex(-1, -(height / 2) - 1, 0.0D)
-                renderer.addVertex(width + 1, -(height / 2) - 1, 0.0D)
-                renderer.addVertex(width + 1, height / 2, 0.0D)
+                renderer.func_181662_b(-1, height / 2, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
+                renderer.func_181662_b(-1, -(height / 2) - 1, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
+                renderer.func_181662_b(width + 1, -(height / 2) - 1, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
+                renderer.func_181662_b(width + 1, height / 2, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
             }
             renderer.finishDrawing()
         }
