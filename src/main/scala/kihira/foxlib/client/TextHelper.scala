@@ -44,11 +44,11 @@ object TextHelper {
         OpenGlHelper.glBlendFunc(770, 771, 1, 0)
         GL11.glDisable(GL11.GL_TEXTURE_2D)
 
-        renderer.func_181668_a(7, DefaultVertexFormats.field_181706_f)
-        renderer.func_181662_b(xOffset - 1, -1, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
-        renderer.func_181662_b(xOffset - 1, height, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
-        renderer.func_181662_b(xOffset + maxWidth + 1, height, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
-        renderer.func_181662_b(xOffset + maxWidth + 1, -1, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
+        renderer.begin(7, DefaultVertexFormats.POSITION_COLOR)
+        renderer.pos(xOffset - 1, -1, 0.0D).color(0f, 0f, 0f, 0.25f).endVertex()
+        renderer.pos(xOffset - 1, height, 0.0D).color(0f, 0f, 0f, 0.25f).endVertex()
+        renderer.pos(xOffset + maxWidth + 1, height, 0.0D).color(0f, 0f, 0f, 0.25f).endVertex()
+        renderer.pos(xOffset + maxWidth + 1, -1, 0.0D).color(0f, 0f, 0f, 0.25f).endVertex()
         renderer.finishDrawing()
 
         GL11.glEnable(GL11.GL_TEXTURE_2D)
@@ -99,19 +99,19 @@ object TextHelper {
         GL11.glDisable(GL11.GL_TEXTURE_2D)
 
         if (background) {
-            renderer.func_181668_a(7, DefaultVertexFormats.field_181706_f)
+            renderer.begin(7, DefaultVertexFormats.POSITION_COLOR)
             if (center) {
                 //We add the offset of the font height to move it to the correct position
-                renderer.func_181662_b(-(width / 2) - 1, fontrenderer.FONT_HEIGHT, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
-                renderer.func_181662_b(-(width / 2) - 1, -height + fontrenderer.FONT_HEIGHT - 1, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
-                renderer.func_181662_b((width / 2) + 1, -height + fontrenderer.FONT_HEIGHT - 1, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
-                renderer.func_181662_b((width / 2) + 1, fontrenderer.FONT_HEIGHT, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
+                renderer.pos(-(width / 2) - 1, fontrenderer.FONT_HEIGHT, 0.0D).color(0f, 0f, 0f, 0.25f).endVertex()
+                renderer.pos(-(width / 2) - 1, -height + fontrenderer.FONT_HEIGHT - 1, 0.0D).color(0f, 0f, 0f, 0.25f).endVertex()
+                renderer.pos((width / 2) + 1, -height + fontrenderer.FONT_HEIGHT - 1, 0.0D).color(0f, 0f, 0f, 0.25f).endVertex()
+                renderer.pos((width / 2) + 1, fontrenderer.FONT_HEIGHT, 0.0D).color(0f, 0f, 0f, 0.25f).endVertex()
             }
             else {
-                renderer.func_181662_b(-1, height / 2, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
-                renderer.func_181662_b(-1, -(height / 2) - 1, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
-                renderer.func_181662_b(width + 1, -(height / 2) - 1, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
-                renderer.func_181662_b(width + 1, height / 2, 0.0D).func_181666_a(0f, 0f, 0f, 0.25f).func_181675_d()
+                renderer.pos(-1, height / 2, 0.0D).color(0f, 0f, 0f, 0.25f).endVertex()
+                renderer.pos(-1, -(height / 2) - 1, 0.0D).color(0f, 0f, 0f, 0.25f).endVertex()
+                renderer.pos(width + 1, -(height / 2) - 1, 0.0D).color(0f, 0f, 0f, 0.25f).endVertex()
+                renderer.pos(width + 1, height / 2, 0.0D).color(0f, 0f, 0f, 0.25f).endVertex()
             }
             renderer.finishDrawing()
         }

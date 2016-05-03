@@ -46,7 +46,7 @@ object ClientEventHandler {
             GL11.glDepthMask(false)
             import scala.collection.JavaConversions._
             for (collisionBox <- collisionBoxes) {
-                RenderGlobal.func_181561_a(collisionBox.offset(-xOffset, -yOffset, -zOffset))
+                RenderGlobal.drawSelectionBoundingBox(collisionBox.offset(-xOffset, -yOffset, -zOffset))
             }
             GL11.glDepthMask(true)
             GL11.glEnable(GL11.GL_TEXTURE_2D)
