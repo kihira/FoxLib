@@ -79,14 +79,14 @@ public class ToastManager {
         Profiler profiler = Minecraft.getMinecraft().mcProfiler;
         profiler.startSection("toastNotification");
         for (Toast toast : toasts) {
-            toast.drawToast(event.mouseX, event.mouseY);
+            toast.drawToast(event.getMouseX(), event.getMouseY());
         }
         profiler.endSection();
     }
 
     @SubscribeEvent
     public void onRenderGameOverlay(RenderGameOverlayEvent.Post event) {
-        if (event.type == RenderGameOverlayEvent.ElementType.HOTBAR) {
+        if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
             Profiler profiler = Minecraft.getMinecraft().mcProfiler;
             profiler.startSection("toastNotification");
             for (Toast toast : toasts) {

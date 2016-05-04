@@ -11,8 +11,8 @@ package kihira.foxlib.client
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.FontRenderer
 import net.minecraft.client.renderer.entity.RenderManager
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats
-import net.minecraft.client.renderer.{OpenGlHelper, Tessellator, WorldRenderer}
+import net.minecraft.client.renderer.vertex.{DefaultVertexFormats}
+import net.minecraft.client.renderer.{OpenGlHelper, Tessellator, VertexBuffer}
 import org.lwjgl.opengl.GL11
 
 object TextHelper {
@@ -29,7 +29,7 @@ object TextHelper {
      */
     def drawWrappedMessageFacingPlayer(x:Double, y:Double, z:Double, scale:Float = 0.016666668F, maxWidth:Int, xOffset:Double, text:String, colour:Int = -1) {
         val fontrenderer: FontRenderer = Minecraft.getMinecraft.fontRendererObj
-        val renderer: WorldRenderer = Tessellator.getInstance().getWorldRenderer
+        val renderer: VertexBuffer = Tessellator.getInstance().getBuffer
         val renderManager: RenderManager = Minecraft.getMinecraft.getRenderManager
         val height: Double = fontrenderer.listFormattedStringToWidth(text, maxWidth).size * fontrenderer.FONT_HEIGHT
 
@@ -74,7 +74,7 @@ object TextHelper {
      */
     def drawMultiLineMessageFacingPlayer(x:Double, y:Double, z:Double, scale:Float = 0.016666668F, text:Array[String], colour:Int = -1, center:Boolean = true, background:Boolean = true) {
         val fontrenderer: FontRenderer = Minecraft.getMinecraft.fontRendererObj
-        val renderer: WorldRenderer = Tessellator.getInstance().getWorldRenderer
+        val renderer: VertexBuffer = Tessellator.getInstance().getBuffer
         val renderManager: RenderManager = Minecraft.getMinecraft.getRenderManager
         val height: Double = text.size * fontrenderer.FONT_HEIGHT
         val width: Int = {

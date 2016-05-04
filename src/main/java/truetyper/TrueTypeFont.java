@@ -1,7 +1,7 @@
 package truetyper;
 
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
@@ -226,7 +226,7 @@ public class TrueTypeFont {
 		float SrcHeight = srcY2 - srcY;
 		float RenderWidth = (SrcWidth / textureWidth);
 		float RenderHeight = (SrcHeight / textureHeight);
-		WorldRenderer renderer = Tessellator.getInstance().getWorldRenderer();
+		VertexBuffer renderer = Tessellator.getInstance().getBuffer();
 
 		//renderer.setColorRGBA_F(0f, 0f, 0f, 1f);
 
@@ -342,7 +342,7 @@ public class TrueTypeFont {
 
 		}
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, fontTextureID);
-		WorldRenderer renderer = Tessellator.getInstance().getWorldRenderer();
+		VertexBuffer renderer = Tessellator.getInstance().getBuffer();
 		//renderer.startDrawingQuads();
 	//	GL11.glBegin(GL11.GL_QUADS);
 		//if(rgba.length == 4) renderer.setColorRGBA_F(rgba[0], rgba[1], rgba[2], rgba[3]);

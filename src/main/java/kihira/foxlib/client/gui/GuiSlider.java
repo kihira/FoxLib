@@ -10,7 +10,7 @@ package kihira.foxlib.client.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 
 public class GuiSlider extends GuiButton {
 
