@@ -30,7 +30,6 @@ public class ToastManager {
     private final ArrayList<Toast> toasts = new ArrayList<Toast>();
 
     private ToastManager() {
-        FMLCommonHandler.instance().bus().register(this);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
