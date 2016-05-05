@@ -83,16 +83,4 @@ public class ToastManager {
         }
         profiler.endSection();
     }
-
-    @SubscribeEvent
-    public void onRenderGameOverlay(RenderGameOverlayEvent.Post event) {
-        if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
-            Profiler profiler = Minecraft.getMinecraft().mcProfiler;
-            profiler.startSection("toastNotification");
-            for (Toast toast : toasts) {
-                // TODO toast.drawToast(event.mouseX, event.mouseY);
-            }
-            profiler.endSection();
-        }
-    }
 }

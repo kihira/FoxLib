@@ -11,6 +11,7 @@ package kihira.foxlib.client.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 
 import java.util.ArrayList;
@@ -67,12 +68,12 @@ public abstract class GuiBaseScreen extends GuiScreen {
             return false;
         }
 
-/*        @Override
-        TODO public void func_146111_b(int x, int y) {
+        @Override
+        public void drawButtonForegroundLayer(int x, int y) {
             ArrayList<String> list = new ArrayList<String>();
             list.addAll(this.tooltip);
-            list.add((!this.enabled ? EnumChatFormatting.GREEN + EnumChatFormatting.ITALIC.toString() + "Enabled" : EnumChatFormatting.RED + EnumChatFormatting.ITALIC.toString() + "Disabled"));
+            list.add((!this.enabled ? TextFormatting.GREEN + TextFormatting.ITALIC.toString() + "Enabled" : TextFormatting.RED + TextFormatting.ITALIC.toString() + "Disabled"));
             drawHoveringText(list, x, y);
-        }*/
+        }
     }
 }

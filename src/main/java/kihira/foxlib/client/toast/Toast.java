@@ -25,8 +25,8 @@ public class Toast {
     private final int width;
     private final int height;
     private final List<String> message;
-    public boolean mouseOver;
-    public int time;
+    boolean mouseOver;
+    int time;
 
     public Toast(int xPos, int yPos, int width, int time, String... message) {
         this.xPos = xPos;
@@ -65,7 +65,7 @@ public class Toast {
         }
     }
 
-    protected void drawBackdrop(int x, int y, int width, int height) {
+    private void drawBackdrop(int x, int y, int width, int height) {
         int opacity = mouseOver ? 255 : (int) (this.time * 256F / 25F);
         if (opacity > 255) opacity = 255;
 
