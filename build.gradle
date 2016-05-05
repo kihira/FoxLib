@@ -13,79 +13,42 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'scala'
 
-group= "kihira"
-archivesBaseName = "FoxLib"
-
-project.ext {
+ext {
     massive = "0"
-    major = "8"
-    minor = "2"
+    major = "9"
+    minor = "0"
     mcVersion = "1.9"
     forgeVersion = "12.16.1.1888"
-    buildVersion = System.getenv("BUILD_NUMBER")
 }
 
+group= "kihira"
+archivesBaseName = "FoxLib"
+version = "${project.mcVersion}-${project.massive}.${project.major}.${project.minor}"
+
 minecraft {
-    version = "${project.ext.mcVersion}-${project.ext.forgeVersion}"
+    version = "${project.mcVersion}-${project.forgeVersion}"
     runDir = "run"
 	mappings = "snapshot_20160312"
 
     replace '@VERSION@', project.version
 }
 
-configurations {
-    deployerJars
-    all {
-        resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
+//noinspection GroovyAssignabilityCheck
+processResources {
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+
+        // replace version and mcversion
+        expand 'version':project.version, 'mcversion':project.minecraft.version
     }
-}
 
-dependencies {
-    // you may put jars on which you depend on in ./libs
-    // or you may define them like so..
-    //compile "some.group:artifact:version:classifier"
-    //compile "some.group:artifact:version"
-
-    // real examples
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // the 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    //provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // the deobf configurations:  'deobfCompile' and 'deobfProvided' are the same as the normal compile and provided,
-    // except that these dependencies get remapped to your current MCP mappings
-    //deobfCompile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-    //deobfProvided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // for more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
-    deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
-}
-
-processResources
-        {
-            // this will ensure that this task is redone when the versions change.
-            inputs.property "version", project.version
-            inputs.property "mcversion", project.minecraft.version
-
-            // replace stuff in mcmod.info, nothing else
-            from(sourceSets.main.resources.srcDirs) {
-                include 'mcmod.info'
-
-                // replace version and mcversion
-                expand 'version':project.version, 'mcversion':project.minecraft.version
-            }
-
-            // copy everything else, thats not the mcmod.info
-            from(sourceSets.main.resources.srcDirs) {
-                exclude 'mcmod.info'
-            }
-        }
-
-project.version = "${project.ext.mcVersion}-${project.ext.massive}.${project.ext.major}.${project.minor}"
-if (project.hasProperty("teamcity") && project.ext.buildVersion != null && teamcity["maven_release"] == null) {
-    version = version + ".${System.getenv("BUILD_NUMBER")}"
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
 }
