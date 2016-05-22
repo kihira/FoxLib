@@ -37,7 +37,7 @@ public enum EnumHeadType {
     }
 
     public static ItemStack getHead(int id, GameProfile owner) {
-        ItemStack itemStack = new ItemStack(Items.skull, 1, id);
+        ItemStack itemStack = new ItemStack(Items.SKULL, 1, id);
         if (owner != null) {
             NBTTagCompound tag = new NBTTagCompound();
             NBTTagCompound gameProfileTag = new NBTTagCompound();

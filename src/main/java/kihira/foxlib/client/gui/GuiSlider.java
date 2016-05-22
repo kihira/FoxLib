@@ -47,7 +47,7 @@ public class GuiSlider extends GuiButton {
                 this.updateValues(xPos, yPos);
             }
 
-            minecraft.renderEngine.bindTexture(buttonTextures);
+            minecraft.renderEngine.bindTexture(BUTTON_TEXTURES);
             this.drawTexturedModalRect((int) (this.xPosition + (this.sliderValue * (this.width - 8))), this.yPosition, 0, 66, 4, 20);
             this.drawTexturedModalRect((int) (this.xPosition + (this.sliderValue * (this.width - 8)) + 4), this.yPosition, 196, 66, 4, 20);
         }

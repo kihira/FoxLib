@@ -9,34 +9,38 @@
 package kihira.foxlib.common
 
 import net.minecraft.entity.Entity
-import net.minecraft.util.math.MathHelper
+import net.minecraft.util.math.{BlockPos, MathHelper}
 
 object EntityHelper {
 
-    def getPitchYawToPosition(sourceX:Double, sourceY:Double, sourceZ:Double, targetX:Double, targetY:Double, targetZ:Double): Array[Float] = {
-        val xDiff: Double = targetX - sourceX
-        val yDiff: Double = targetY - sourceY
-        val zDiff: Double = targetZ - sourceZ
-        val d3: Double = MathHelper.sqrt_double((xDiff * xDiff) + (zDiff * zDiff)).asInstanceOf[Double]
-        val pitch: Float = (-(Math.atan2(yDiff, d3) * 180.0D / Math.PI)).asInstanceOf[Float]
-        val yaw: Float = (Math.atan2(zDiff, xDiff) * 180.0D / Math.PI).asInstanceOf[Float] - 90.0F
+  def getPitchYawToPosition(sourceX:Double, sourceY:Double, sourceZ:Double, target:BlockPos): Array[Float] = {
+    getPitchYawToPosition(sourceX, sourceY, sourceZ, target.getX, target.getY, target.getZ)
+  }
 
-        Array[Float](pitch, yaw)
-    }
+  def getPitchYawToPosition(sourceX:Double, sourceY:Double, sourceZ:Double, targetX:Double, targetY:Double, targetZ:Double): Array[Float] = {
+    val xDiff: Double = targetX - sourceX
+    val yDiff: Double = targetY - sourceY
+    val zDiff: Double = targetZ - sourceZ
+    val d3: Double = MathHelper.sqrt_double((xDiff * xDiff) + (zDiff * zDiff)).asInstanceOf[Double]
+    val pitch: Float = (-(Math.atan2(yDiff, d3) * 180.0D / Math.PI)).asInstanceOf[Float]
+    val yaw: Float = (Math.atan2(zDiff, xDiff) * 180.0D / Math.PI).asInstanceOf[Float] - 90.0F
 
-    def getPitchYawToEntity(sourceX:Double, sourceY:Double, sourceZ:Double, targetEntity:Entity): Array[Float] = {
-        getPitchYawToPosition(sourceX, sourceY, sourceZ, targetEntity.posX - targetEntity.width, targetEntity.posY - targetEntity.height +
-            targetEntity.getEyeHeight.asInstanceOf[Double] + (if (targetEntity.worldObj.isRemote) 0.1F else 0.22F), targetEntity.posZ - targetEntity.width)
-    }
+    Array[Float](pitch, yaw)
+  }
 
-    def getPitchYawToEntity(sourceEntity:Entity, targetEntity:Entity): Array[Float] = {
-        getPitchYawToEntity(sourceEntity.posX, sourceEntity.posY, sourceEntity.posZ, targetEntity)
-    }
+  def getPitchYawToEntity(sourceX:Double, sourceY:Double, sourceZ:Double, targetEntity:Entity): Array[Float] = {
+    getPitchYawToPosition(sourceX, sourceY, sourceZ, targetEntity.posX - targetEntity.width, targetEntity.posY - targetEntity.height +
+      targetEntity.getEyeHeight.asInstanceOf[Double] + (if (targetEntity.worldObj.isRemote) 0.1F else 0.22F), targetEntity.posZ - targetEntity.width)
+  }
 
-    def updateRotation(currRot: Float, intendedRot: Float, maxInc: Float): Float = {
-        var f3: Float = MathHelper.wrapAngleTo180_float(intendedRot - currRot)
-        if (f3 > maxInc) f3 = maxInc
-        if (f3 < -maxInc) f3 = -maxInc
-        currRot + f3
-    }
+  def getPitchYawToEntity(sourceEntity:Entity, targetEntity:Entity): Array[Float] = {
+    getPitchYawToEntity(sourceEntity.posX, sourceEntity.posY, sourceEntity.posZ, targetEntity)
+  }
+
+  def updateRotation(currRot: Float, intendedRot: Float, maxInc: Float): Float = {
+    var f3: Float = MathHelper.wrapDegrees(intendedRot - currRot)
+    if (f3 > maxInc) f3 = maxInc
+    if (f3 < -maxInc) f3 = -maxInc
+    currRot + f3
+  }
 }

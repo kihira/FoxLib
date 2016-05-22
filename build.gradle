@@ -17,8 +17,8 @@ ext {
     massive = "0"
     major = "9"
     minor = "0"
-    mcVersion = "1.9"
-    forgeVersion = "12.16.1.1888"
+    mcVersion = "1.9.4"
+    forgeVersion = "12.17.0.1909-1.9.4"
 }
 
 group= "kihira"
@@ -28,7 +28,7 @@ version = "${project.mcVersion}-${project.massive}.${project.major}.${project.mi
 minecraft {
     version = "${project.mcVersion}-${project.forgeVersion}"
     runDir = "run"
-	mappings = "snapshot_20160312"
+	mappings = "snapshot_20160518"
 
     replace '@VERSION@', project.version
 }
