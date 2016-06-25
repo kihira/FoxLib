@@ -13,6 +13,9 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'scala'
 
+sourceCompatibility='1.8'
+targetCompatibility='1.8'
+
 ext {
     massive = "0"
     major = "10"
