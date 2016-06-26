@@ -24,7 +24,7 @@ public enum EnumHeadType {
     CREEPER(4);
 
     private int id;
-    private EnumHeadType(int id) {
+    EnumHeadType(int id) {
         this.id = id;
     }
 

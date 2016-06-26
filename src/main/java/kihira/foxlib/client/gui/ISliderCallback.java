@@ -10,5 +10,5 @@ package kihira.foxlib.client.gui;
 
 public interface ISliderCallback {
 
-    public boolean onValueChange(GuiSlider slider, float oldValue, float newValue);
+    boolean onValueChange(GuiSlider slider, float oldValue, float newValue);
 }

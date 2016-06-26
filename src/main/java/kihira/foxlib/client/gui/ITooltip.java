@@ -14,5 +14,5 @@ import java.util.List;
  * Implemented by GuiButton's that has a tooltip
  */
 public interface ITooltip {
-    public List<String> getTooltip(int mouseX, int mouseY);
+    List<String> getTooltip(int mouseX, int mouseY);
 }

@@ -30,6 +30,7 @@ public class GuiIconButton extends GuiButton implements ITooltip {
         this.tooltip = Arrays.asList(tooltips);
     }
 
+    @Override
     public void drawButton(Minecraft minecraft, int mouseX, int mouseY) {
         if (visible) {
             minecraft.getTextureManager().bindTexture(iconsTextures);
@@ -107,7 +108,7 @@ public class GuiIconButton extends GuiButton implements ITooltip {
         public final int u;
         public final int v;
 
-        private Icons(int u, int v) {
+        Icons(int u, int v) {
             this.u = u;
             this.v = v;
         }

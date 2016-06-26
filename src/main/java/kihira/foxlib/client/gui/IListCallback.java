@@ -12,5 +12,5 @@ import net.minecraft.client.gui.GuiListExtended;
 
 public interface IListCallback<T extends GuiListExtended.IGuiListEntry> {
 
-    public boolean onEntrySelected(GuiList guiList, int index, T entry);
+    boolean onEntrySelected(GuiList guiList, int index, T entry);
 }
