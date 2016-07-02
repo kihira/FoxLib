@@ -12,7 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.math.MathHelper;
 
-public class GuiSlider extends GuiButton {
+public class GuiSlider extends GuiButton implements IControl<Float> {
 
     public float currentValue;
     private float minValue;
@@ -20,7 +20,7 @@ public class GuiSlider extends GuiButton {
     private float sliderValue;
     private String preString;
     private boolean dragging = false;
-    private ISliderCallback parent;
+    private IControlCallback parent;
 
     public GuiSlider(int id, int x, int y, int width, float minValue, float maxValue, float defaultValue) {
         super(id, x, y, width, 20, String.valueOf(defaultValue));
@@ -30,12 +30,12 @@ public class GuiSlider extends GuiButton {
         this.sliderValue = MathHelper.clamp_float((this.currentValue - this.minValue) / (this.maxValue - this.minValue), 0.0F, 1.0F);
     }
 
-    public GuiSlider(ISliderCallback parent, int id, int x, int y, int width, float minValue, float maxValue, float defaultValue) {
+    public GuiSlider(IControlCallback parent, int id, int x, int y, int width, float minValue, float maxValue, float defaultValue) {
         this(id, x, y, width, minValue, maxValue, defaultValue);
         this.parent = parent;
     }
 
-    public GuiSlider(ISliderCallback parent, int id, int x, int y, int width, float minValue, float maxValue, float defaultValue, String displayString) {
+    public GuiSlider(IControlCallback parent, int id, int x, int y, int width, float minValue, float maxValue, float defaultValue, String displayString) {
         this(parent, id, x, y, width, minValue, maxValue, defaultValue);
         this.preString = displayString;
     }
@@ -75,10 +75,16 @@ public class GuiSlider extends GuiButton {
         this.dragging = false;
     }
 
-    public void setCurrentValue(float currentValue) {
+    @Override
+    public void setValue(Float currentValue) {
         this.currentValue = currentValue;
         this.sliderValue = MathHelper.clamp_float((this.currentValue - this.minValue) / (this.maxValue - this.minValue), 0.0F, 1.0F);
         this.displayString = String.valueOf(this.currentValue);
+    }
+
+    @Override
+    public Float getValue() {
+        return currentValue;
     }
 
     private void updateValues(int xPos, int yPos) {
@@ -88,7 +94,7 @@ public class GuiSlider extends GuiButton {
         this.currentValue = (int) (this.sliderValue * (this.maxValue - this.minValue) + this.minValue);
 
         if (this.parent != null && !this.parent.onValueChange(this, prevValue, this.currentValue)) {
-            this.setCurrentValue(prevValue);
+            this.setValue(prevValue);
         }
         else this.displayString = String.valueOf(this.currentValue);
     }

@@ -18,16 +18,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GuiBaseScreen extends GuiScreen {
+    private int prevMouseX;
+    private int prevMouseY;
+    private float mouseIdleTicks;
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float p_73863_3_) {
-        super.drawScreen(mouseX, mouseY, p_73863_3_);
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        super.drawScreen(mouseX, mouseY, partialTicks);
 
-        //Tooltips
-        for (Object obj : this.buttonList) {
-            //Has tooltip and has mouse over
-            if (obj instanceof ITooltip && ((GuiButton) obj).isMouseOver()) {
-                drawHoveringText(((ITooltip) obj).getTooltip(mouseX, mouseY), mouseX, mouseY);
+        // Tooltips
+        for (GuiButton btn : buttonList) {
+            if (btn instanceof ITooltip && btn.isMouseOver()) {
+                if (prevMouseX == mouseX && prevMouseY == mouseY) mouseIdleTicks += partialTicks;
+                else if (mouseIdleTicks > 0f) mouseIdleTicks = 0f;
+                drawHoveringText(((ITooltip) btn).getTooltip(mouseX, mouseY, mouseIdleTicks), mouseX, mouseY);
+                prevMouseX = mouseX;
+                prevMouseY = mouseY;
+                break;
             }
         }
     }
@@ -48,9 +55,13 @@ public abstract class GuiBaseScreen extends GuiScreen {
         }
 
         @Override
-        public List<String> getTooltip(int mouseX, int mouseY) {
+        public List<String> getTooltip(int mouseX, int mouseY, float mouseIdleTime) {
             return this.tooltip;
         }
+    }
+
+    public static boolean isMouseOver(int mouseX, int mouseY, int xPos, int yPos, int width, int height) {
+        return mouseX >= xPos && mouseY >= yPos && mouseX < xPos + width && mouseY < yPos + height;
     }
 
     public class GuiButtonToggle extends GuiButtonTooltip {
@@ -61,7 +72,7 @@ public abstract class GuiBaseScreen extends GuiScreen {
 
         @Override
         public boolean mousePressed(Minecraft minecraft, int mouseX, int mouseY) {
-            if (this.visible && mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height) {
+            if (this.visible && GuiBaseScreen.isMouseOver(mouseX, mouseY, xPosition, yPosition, width, height)) {
                 this.enabled = !this.enabled;
                 return true;
             }
@@ -70,7 +81,7 @@ public abstract class GuiBaseScreen extends GuiScreen {
 
         @Override
         public void drawButtonForegroundLayer(int x, int y) {
-            ArrayList<String> list = new ArrayList<String>();
+            ArrayList<String> list = new ArrayList<>();
             list.addAll(this.tooltip);
             list.add((!this.enabled ? TextFormatting.GREEN + TextFormatting.ITALIC.toString() + "Enabled" : TextFormatting.RED + TextFormatting.ITALIC.toString() + "Disabled"));
             drawHoveringText(list, x, y);

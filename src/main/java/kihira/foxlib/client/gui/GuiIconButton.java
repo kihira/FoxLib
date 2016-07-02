@@ -51,7 +51,7 @@ public class GuiIconButton extends GuiButton implements ITooltip {
     }
 
     @Override
-    public List<String> getTooltip(int mouseX, int mouseY) {
+    public List<String> getTooltip(int mouseX, int mouseY, float mouseIdleTime) {
         return tooltip;
     }
 

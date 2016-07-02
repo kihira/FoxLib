@@ -8,7 +8,7 @@
 
 package kihira.foxlib.client.gui;
 
-public interface ISliderCallback {
+public interface IControlCallback<T extends IControl<V>, V> {
 
-    boolean onValueChange(GuiSlider slider, float oldValue, float newValue);
+    boolean onValueChange(T slider, V oldValue, V newValue);
 }
