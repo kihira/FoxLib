@@ -41,7 +41,7 @@ public abstract class GuiBaseScreen extends GuiScreen {
 
     public class GuiButtonTooltip extends GuiButtonExt implements ITooltip {
         private final int maxTextWidth;
-        protected final ArrayList<String> tooltip = new ArrayList<String>();
+        protected final ArrayList<String> tooltip = new ArrayList<>();
 
         @SuppressWarnings("unchecked")
         public GuiButtonTooltip(int id, int x, int y, int width, int height, String text, int maxTextWidth, String... tooltips) {
@@ -58,10 +58,6 @@ public abstract class GuiBaseScreen extends GuiScreen {
         public List<String> getTooltip(int mouseX, int mouseY, float mouseIdleTime) {
             return this.tooltip;
         }
-    }
-
-    public static boolean isMouseOver(int mouseX, int mouseY, int xPos, int yPos, int width, int height) {
-        return mouseX >= xPos && mouseY >= yPos && mouseX < xPos + width && mouseY < yPos + height;
     }
 
     public class GuiButtonToggle extends GuiButtonTooltip {
@@ -86,5 +82,9 @@ public abstract class GuiBaseScreen extends GuiScreen {
             list.add((!this.enabled ? TextFormatting.GREEN + TextFormatting.ITALIC.toString() + "Enabled" : TextFormatting.RED + TextFormatting.ITALIC.toString() + "Disabled"));
             drawHoveringText(list, x, y);
         }
+    }
+
+    public static boolean isMouseOver(int mouseX, int mouseY, int x, int y, int width, int height) {
+        return mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
     }
 }
