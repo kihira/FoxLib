@@ -27,13 +27,13 @@ object ClientEventHandler {
   def onBlockHighlight(e: DrawBlockHighlightEvent) = {
     if (FoxLib.showCollisionBoxes && e.getTarget.typeOfHit == RayTraceResult.Type.BLOCK) {
       val player: EntityPlayer = Minecraft.getMinecraft.thePlayer
-      val block: IBlockState = Minecraft.getMinecraft.theWorld.getBlockState(e.getTarget.getBlockPos)
+      val state: IBlockState = Minecraft.getMinecraft.theWorld.getBlockState(e.getTarget.getBlockPos)
       val xOffset: Double = player.prevPosX + (player.posX - player.prevPosX) * e.getPartialTicks
       val yOffset: Double = player.prevPosY + (player.posY - player.prevPosY) * e.getPartialTicks
       val zOffset: Double = player.prevPosZ + (player.posZ - player.prevPosZ) * e.getPartialTicks
       val collisionBoxes: util.List[AxisAlignedBB] = new util.ArrayList[AxisAlignedBB]()
 
-      block.getBlock.addCollisionBoxToList(block, Minecraft.getMinecraft.theWorld, e.getTarget.getBlockPos,
+      state.addCollisionBoxToList(Minecraft.getMinecraft.theWorld, e.getTarget.getBlockPos,
         TileEntity.INFINITE_EXTENT_AABB, collisionBoxes, null)
 
       //Render the box(es)
@@ -46,7 +46,7 @@ object ClientEventHandler {
       GL11.glDepthMask(false)
       import scala.collection.JavaConversions._
       for (collisionBox <- collisionBoxes) {
-        RenderGlobal.drawSelectionBoundingBox(collisionBox.offset(-xOffset, -yOffset, -zOffset))
+        RenderGlobal.func_189697_a(collisionBox.offset(-xOffset, -yOffset, -zOffset), 0.0F, 0.0F, 0.0F, 0.4F) //drawSelectionBoundingBox
       }
       GL11.glDepthMask(true)
       GL11.glEnable(GL11.GL_TEXTURE_2D)
