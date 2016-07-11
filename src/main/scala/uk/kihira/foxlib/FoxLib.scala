@@ -26,7 +26,7 @@ object FoxLib {
     var showCollisionBoxes: Boolean = false
     var fancySkulls: Boolean = true
 
-    @SidedProxy(clientSide = "kihira.foxlib.proxy.ClientProxy", serverSide = "kihira.foxlib.proxy.CommonProxy")
+    @SidedProxy(clientSide = "uk.kihira.foxlib.proxy.ClientProxy", serverSide = "uk.kihira.foxlib.proxy.CommonProxy")
     var proxy: CommonProxy = null
 
     @EventHandler
