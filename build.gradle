@@ -12,6 +12,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'scala'
+apply plugin: 'maven'
 
 sourceCompatibility='1.8'
 targetCompatibility='1.8'
@@ -24,14 +25,14 @@ ext {
     forgeVersion = "12.18.0.2007-1.10.0"
 }
 
-group= "kihira"
+group= "uk.kihira.foxlib"
 archivesBaseName = "FoxLib"
 version = "${project.mcVersion}-${project.massive}.${project.major}.${project.minor}"
 
 minecraft {
     version = "${project.mcVersion}-${project.forgeVersion}"
     runDir = "run"
-	mappings = "snapshot_20160518"
+    mappings = "snapshot_20160518"
 
     replace '@VERSION@', project.version
 }
@@ -53,5 +54,70 @@ processResources {
     // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
+    }
+}
+configurations {
+    deployerJars
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    deployerJars "org.apache.maven.wagon:wagon-ssh:2.2"
+}
+
+//noinspection GroovyAssignabilityCheck
+uploadArchives {
+    repositories.mavenDeployer {
+        if (project.hasProperty("maven_url")) {
+            configuration = configurations.deployerJars
+            repository(url: project.properties.maven_url) { // If it ever complains about unknown host, manually add server key to known_hosts
+                authentication(userName: project.properties.maven_username, password: project.properties.maven_password)
+            }
+        }
+
+        pom {
+            groupId = project.group
+            version = project.version
+            artifactId = project.archivesBaseName
+        }
+
+        pom.project {
+            name project.archivesBaseName
+            packaging 'jar'
+            description 'FoxLib'
+            url 'https://github.com/kihira/FoxLib/'
+
+            scm {
+                url 'https://github.com/kihira/FoxLib/'
+                connection 'scm:git:git://github.com/kihira/FoxLib.git'
+                developerConnection 'scm:git:git@github.com/kihira/FoxLib.git'
+            }
+
+            issueManagement {
+                system 'github'
+                url 'https://github.com/kihira/FoxLib/issues'
+            }
+
+            licenses {
+                license {
+                    name 'The MIT License (MIT)'
+                    url 'https://opensource.org/licenses/MIT'
+                    distribution 'repo'
+                }
+            }
+
+            developers {
+                developer {
+                    id 'Kihira'
+                    name 'Kihira'
+                    roles {
+                        role 'developer'
+                    }
+                }
+            }
+        }
     }
 }
