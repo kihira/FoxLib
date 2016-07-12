@@ -10,14 +10,11 @@ package uk.kihira.foxlib
 
 import java.io.File
 
-import net.minecraftforge.fml.common.Mod.EventHandler
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
-import net.minecraftforge.fml.common.{Mod, SidedProxy}
-import uk.kihira.foxlib.proxy.CommonProxy
 import net.minecraftforge.common.config.Configuration
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import org.apache.logging.log4j.{LogManager, Logger}
+import uk.kihira.foxlib.proxy.CommonProxy
 
-@Mod(modid = FoxLib.MOD_ID, name = "FoxLib", version = "@VERSION@", modLanguage = "scala")
 object FoxLib {
 
     final val MOD_ID = "foxlib"
@@ -26,10 +23,10 @@ object FoxLib {
     var showCollisionBoxes: Boolean = false
     var fancySkulls: Boolean = true
 
-    @SidedProxy(clientSide = "uk.kihira.foxlib.proxy.ClientProxy", serverSide = "uk.kihira.foxlib.proxy.CommonProxy")
+    //@SidedProxy(clientSide = "uk.kihira.foxlib.proxy.ClientProxy", serverSide = "uk.kihira.foxlib.proxy.CommonProxy")
     var proxy: CommonProxy = null
 
-    @EventHandler
+    //@EventHandler
     def onPreInit(e: FMLPreInitializationEvent) {
         loadConfig(e.getSuggestedConfigurationFile)
         proxy.registerEventHandlers()

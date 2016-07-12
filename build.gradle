@@ -20,7 +20,7 @@ targetCompatibility='1.8'
 ext {
     massive = "0"
     major = "11"
-    minor = "0"
+    minor = "2"
     mcVersion = "1.10.2"
     forgeVersion = "12.18.0.2007-1.10.0"
 }
