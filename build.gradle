@@ -22,7 +22,7 @@ ext {
     major = "11"
     minor = "2"
     mcVersion = "1.10.2"
-    forgeVersion = "12.18.0.2007-1.10.0"
+    forgeVersion = "12.18.1.2076"
 }
 
 group= "uk.kihira.foxlib"
