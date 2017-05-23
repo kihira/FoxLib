@@ -32,14 +32,14 @@ public class ToastManager {
     }
 
     public void createToast(int x, int y, String text) {
-        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
         int stringWidth = fontRenderer.getStringWidth(text);
         toasts.add(new Toast(x, y, stringWidth + 10,  stringWidth * 3, text));
     }
 
     @SuppressWarnings("unchecked")
     public void createCenteredToast(int x, int y, int maxWidth, String text) {
-        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
         int stringWidth = fontRenderer.getStringWidth(text);
         if (stringWidth > maxWidth) {
             List<String> strings = fontRenderer.listFormattedStringToWidth(text, maxWidth);

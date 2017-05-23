@@ -19,10 +19,10 @@ targetCompatibility='1.8'
 
 ext {
     massive = "0"
-    major = "11"
-    minor = "2"
-    mcVersion = "1.10.2"
-    forgeVersion = "12.18.1.2076"
+    major = "12"
+    minor = "0"
+    mcVersion = "1.11.2"
+    forgeVersion = "13.20.0.2304"
 }
 
 group= "uk.kihira.foxlib"
@@ -32,7 +32,7 @@ version = "${project.mcVersion}-${project.massive}.${project.major}.${project.mi
 minecraft {
     version = "${project.mcVersion}-${project.forgeVersion}"
     runDir = "run"
-    mappings = "snapshot_20160518"
+    mappings = "snapshot_20170522"
 
     replace '@VERSION@', project.version
 }

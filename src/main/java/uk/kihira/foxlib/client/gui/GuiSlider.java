@@ -27,7 +27,7 @@ public class GuiSlider extends GuiButton implements IControl<Float> {
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.currentValue = defaultValue;
-        this.sliderValue = MathHelper.clamp_float((this.currentValue - this.minValue) / (this.maxValue - this.minValue), 0.0F, 1.0F);
+        this.sliderValue = MathHelper.clamp((this.currentValue - this.minValue) / (this.maxValue - this.minValue), 0.0F, 1.0F);
     }
 
     public GuiSlider(IControlCallback parent, int id, int x, int y, int width, float minValue, float maxValue, float defaultValue) {
@@ -78,7 +78,7 @@ public class GuiSlider extends GuiButton implements IControl<Float> {
     @Override
     public void setValue(Float currentValue) {
         this.currentValue = currentValue;
-        this.sliderValue = MathHelper.clamp_float((this.currentValue - this.minValue) / (this.maxValue - this.minValue), 0.0F, 1.0F);
+        this.sliderValue = MathHelper.clamp((this.currentValue - this.minValue) / (this.maxValue - this.minValue), 0.0F, 1.0F);
         this.displayString = String.valueOf(this.currentValue);
     }
 
@@ -90,7 +90,7 @@ public class GuiSlider extends GuiButton implements IControl<Float> {
     private void updateValues(int xPos, int yPos) {
         float prevValue = this.currentValue;
 
-        this.sliderValue = MathHelper.clamp_float((xPos - (this.xPosition + 4F)) / (this.width - 8F), 0F, 1F);
+        this.sliderValue = MathHelper.clamp((xPos - (this.xPosition + 4F)) / (this.width - 8F), 0F, 1F);
         this.currentValue = (int) (this.sliderValue * (this.maxValue - this.minValue) + this.minValue);
 
         if (this.parent != null && !this.parent.onValueChange(this, prevValue, this.currentValue)) {
