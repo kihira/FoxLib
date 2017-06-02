@@ -18,9 +18,8 @@ public class GuiSlider extends GuiButton implements IControl<Float> {
     private float minValue;
     private float maxValue;
     private float sliderValue;
-    private String preString;
     private boolean dragging = false;
-    private IControlCallback parent;
+    private IControlCallback<GuiSlider, Float> parent;
 
     public GuiSlider(int id, int x, int y, int width, float minValue, float maxValue, float defaultValue) {
         super(id, x, y, width, 20, String.valueOf(defaultValue));
@@ -30,14 +29,9 @@ public class GuiSlider extends GuiButton implements IControl<Float> {
         this.sliderValue = MathHelper.clamp((this.currentValue - this.minValue) / (this.maxValue - this.minValue), 0.0F, 1.0F);
     }
 
-    public GuiSlider(IControlCallback parent, int id, int x, int y, int width, float minValue, float maxValue, float defaultValue) {
+    public GuiSlider(IControlCallback<GuiSlider, Float> parent, int id, int x, int y, int width, float minValue, float maxValue, float defaultValue) {
         this(id, x, y, width, minValue, maxValue, defaultValue);
         this.parent = parent;
-    }
-
-    public GuiSlider(IControlCallback parent, int id, int x, int y, int width, float minValue, float maxValue, float defaultValue, String displayString) {
-        this(parent, id, x, y, width, minValue, maxValue, defaultValue);
-        this.preString = displayString;
     }
 
     @Override

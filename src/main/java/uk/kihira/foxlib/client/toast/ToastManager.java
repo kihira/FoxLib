@@ -25,7 +25,7 @@ public class ToastManager {
 
     public static final ToastManager INSTANCE = new ToastManager();
 
-    private final ArrayList<Toast> toasts = new ArrayList<Toast>();
+    private final ArrayList<Toast> toasts = new ArrayList<>();
 
     private ToastManager() {
         MinecraftForge.EVENT_BUS.register(this);
