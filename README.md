@@ -1,4 +1,6 @@
 FoxLib
 =======
 
-A library mod for my mods. Maybe be removed in the future
+##NO LONGER IN USE
+
+A library mod for my mods. May be removed in the future
