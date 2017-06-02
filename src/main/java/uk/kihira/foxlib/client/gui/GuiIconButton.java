@@ -10,9 +10,9 @@ package uk.kihira.foxlib.client.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,8 +34,8 @@ public class GuiIconButton extends GuiButton implements ITooltip {
     public void drawButton(Minecraft minecraft, int mouseX, int mouseY) {
         if (visible) {
             minecraft.getTextureManager().bindTexture(iconsTextures);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GL11.glEnable(GL11.GL_BLEND);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.enableBlend();
             OpenGlHelper.glBlendFunc(770, 771, 1, 0);
 
             //Check mouse over
@@ -76,8 +76,8 @@ public class GuiIconButton extends GuiButton implements ITooltip {
         public void drawButton(Minecraft minecraft, int mouseX, int mouseY) {
             if (visible && toggled) {
                 minecraft.getTextureManager().bindTexture(iconsTextures);
-                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                GL11.glEnable(GL11.GL_BLEND);
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                GlStateManager.enableBlend();
                 OpenGlHelper.glBlendFunc(770, 771, 1, 0);
                 //Check mouse over
                 hovered = mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height;

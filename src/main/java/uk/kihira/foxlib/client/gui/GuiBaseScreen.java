@@ -49,7 +49,7 @@ public abstract class GuiBaseScreen extends GuiScreen {
             this.maxTextWidth = maxTextWidth;
             if (tooltips != null && tooltips.length > 0) {
                 for (String s : tooltips) {
-                    tooltip.addAll(fontRendererObj.listFormattedStringToWidth(s, this.maxTextWidth));
+                    tooltip.addAll(fontRenderer.listFormattedStringToWidth(s, this.maxTextWidth));
                 }
             }
         }

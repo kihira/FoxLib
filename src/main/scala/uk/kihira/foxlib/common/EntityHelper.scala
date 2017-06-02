@@ -21,7 +21,7 @@ object EntityHelper {
     val xDiff: Double = targetX - sourceX
     val yDiff: Double = targetY - sourceY
     val zDiff: Double = targetZ - sourceZ
-    val d3: Double = MathHelper.sqrt_double((xDiff * xDiff) + (zDiff * zDiff)).asInstanceOf[Double]
+    val d3: Double = MathHelper.sqrt((xDiff * xDiff) + (zDiff * zDiff)).asInstanceOf[Double]
     val pitch: Float = (-(Math.atan2(yDiff, d3) * 180.0D / Math.PI)).asInstanceOf[Float]
     val yaw: Float = (Math.atan2(zDiff, xDiff) * 180.0D / Math.PI).asInstanceOf[Float] - 90.0F
 
@@ -30,7 +30,7 @@ object EntityHelper {
 
   def getPitchYawToEntity(sourceX:Double, sourceY:Double, sourceZ:Double, targetEntity:Entity): Array[Float] = {
     getPitchYawToPosition(sourceX, sourceY, sourceZ, targetEntity.posX - targetEntity.width, targetEntity.posY - targetEntity.height +
-      targetEntity.getEyeHeight.asInstanceOf[Double] + (if (targetEntity.worldObj.isRemote) 0.1F else 0.22F), targetEntity.posZ - targetEntity.width)
+      targetEntity.getEyeHeight.asInstanceOf[Double] + (if (targetEntity.world.isRemote) 0.1F else 0.22F), targetEntity.posZ - targetEntity.width)
   }
 
   def getPitchYawToEntity(sourceEntity:Entity, targetEntity:Entity): Array[Float] = {

@@ -2,6 +2,7 @@ package truetyper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
@@ -37,19 +38,19 @@ public class FontHelper {
         }
 
         FloatBuffer matrixData = BufferUtils.createFloatBuffer(16);
-        GL11.glGetFloat(GL11.GL_MODELVIEW_MATRIX, matrixData);
+        GlStateManager.getFloat(GL11.GL_MODELVIEW_MATRIX, matrixData);
         FontHelper.set2DMode(matrixData);
-        GL11.glPushMatrix();
+        GlStateManager.pushMatrix();
         y = mc.displayHeight-(y*sr.getScaleFactor())-(((font.getLineHeight()/amt)));
         float tx = (x*sr.getScaleFactor())+(font.getWidth(s)/2);
         float tranx = tx+2;
         float trany = y+(font.getLineHeight()/2);
-        GL11.glTranslatef(tranx,trany,0);
-        GL11.glRotatef(rotationZ, 0f, 0f, 1f);
-        GL11.glTranslatef(-tranx,-trany,0);
+        GlStateManager.translate(tranx,trany,0);
+        GlStateManager.rotate(rotationZ, 0f, 0f, 1f);
+        GlStateManager.translate(-tranx,-trany,0);
 
 
-        GL11.glEnable(GL11.GL_BLEND);
+        GlStateManager.enableBlend();
         if(s.contains(formatEscape)){
             String[] pars = s.split(formatEscape);
             float totalOffset = 0;
@@ -66,8 +67,8 @@ public class FontHelper {
         }else{
             font.drawString((x*sr.getScaleFactor()), y, s, scaleX/amt, scaleY/amt, rgba);
         }
-        GL11.glPopMatrix();
-        GL11.glDisable(GL11.GL_BLEND);
+        GlStateManager.popMatrix();
+        GlStateManager.disableBlend();
         FontHelper.set3DMode();
     }
 
@@ -75,27 +76,27 @@ public class FontHelper {
         Minecraft mc = Minecraft.getMinecraft();
         ScaledResolution sr = new ScaledResolution(mc);
         mc.entityRenderer.setupOverlayRendering();
-        GL11.glMatrixMode(GL11.GL_PROJECTION);
-        GL11.glPushMatrix();
-        //GL11.glLoadMatrix(matrixData);
+        GlStateManager.matrixMode(GL11.GL_PROJECTION);
+        GlStateManager.pushMatrix();
+        //GlStateManager.glLoadMatrix(matrixData);
 
-        GL11.glLoadIdentity();
-        GL11.glOrtho(0, mc.displayWidth, 0, mc.displayHeight, -1, 1);
-        GL11.glMatrixMode(GL11.GL_MODELVIEW);
-        GL11.glPushMatrix();
-        GL11.glLoadIdentity();
+        GlStateManager.loadIdentity();
+        GlStateManager.ortho(0, mc.displayWidth, 0, mc.displayHeight, -1, 1);
+        GlStateManager.matrixMode(GL11.GL_MODELVIEW);
+        GlStateManager.pushMatrix();
+        GlStateManager.loadIdentity();
 
         Matrix4f matrix = new Matrix4f();
         matrix.load(matrixData);
-        GL11.glTranslatef(matrix.m30*sr.getScaleFactor(),-matrix.m31*sr.getScaleFactor(), 0f);
+        GlStateManager.translate(matrix.m30*sr.getScaleFactor(),-matrix.m31*sr.getScaleFactor(), 0f);
 
     }
 
     private static void set3DMode() {
-        GL11.glMatrixMode(GL11.GL_MODELVIEW);
-        GL11.glPopMatrix();
-        GL11.glMatrixMode(GL11.GL_PROJECTION);
-        GL11.glPopMatrix();
+        GlStateManager.matrixMode(GL11.GL_MODELVIEW);
+        GlStateManager.popMatrix();
+        GlStateManager.matrixMode(GL11.GL_PROJECTION);
+        GlStateManager.popMatrix();
         Minecraft mc = Minecraft.getMinecraft();
         mc.entityRenderer.setupOverlayRendering();
     }

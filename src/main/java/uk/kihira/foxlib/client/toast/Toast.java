@@ -11,6 +11,7 @@ package uk.kihira.foxlib.client.toast;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraftforge.client.event.MouseEvent;
 import org.lwjgl.opengl.GL11;
@@ -34,23 +35,23 @@ public class Toast {
         this.width = width;
         this.time = time;
         this.message = Arrays.asList(message);
-        height = this.message.size() * Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT + 7;
+        height = this.message.size() * Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT + 7;
     }
 
     public void onMouseEvent(MouseEvent mouseEvent) {}
 
     public void drawToast(int mouseX, int mouseY) {
         if (this.time > 0) {
-            FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+            FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
             mouseOver = mouseX >= xPos && mouseY >= yPos && mouseX < xPos + width && mouseY < yPos + height;
             int opacity = mouseOver ? 255 : (int) (this.time * 256F / 10F);
             if (opacity > 255) opacity = 255;
             if (mouseOver) time = 20;
 
             if (opacity > 0) {
-                GL11.glPushMatrix();
-                GL11.glEnable(GL11.GL_BLEND);
-                GL11.glDisable(GL11.GL_LIGHTING);
+                GlStateManager.pushMatrix();
+                GlStateManager.enableBlend();
+                GlStateManager.disableLighting();
                 OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
                 drawBackdrop(xPos, yPos, width, height);
                 int colour = 0xFFFFFF | (opacity << 24);
@@ -58,9 +59,9 @@ public class Toast {
                     String s = message.get(i);
                     fontRenderer.drawStringWithShadow(s, (xPos + width / 2) - (fontRenderer.getStringWidth(s) / 2), yPos + 4 + (fontRenderer.FONT_HEIGHT * i), colour);
                 }
-                GL11.glDisable(GL11.GL_BLEND);
-                GL11.glColor4f(0F, 0F, 0F, 1F);
-                GL11.glPopMatrix();
+                GlStateManager.disableBlend();
+                GlStateManager.color(0F, 0F, 0F, 1F);
+                GlStateManager.popMatrix();
             }
         }
     }
